@@ -1,0 +1,2802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matt • Hardware Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Mode (Default) */
+            --bg-deep: #f8f9fc;
+            --bg-primary: #ffffff;
+            --bg-elevated: #f0f2f5;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #0891b2;
+            --accent-glow: rgba(59, 130, 246, 0.25);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-subtle: rgba(0, 0, 0, 0.06);
+            --border-hover: rgba(0, 0, 0, 0.12);
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --orb-opacity: 0.25;
+            --noise-opacity: 0.02;
+            --grid-opacity: 0.4;
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] {
+            --bg-deep: #050508;
+            --bg-primary: #0a0a0f;
+            --bg-elevated: #12121a;
+            --bg-card: rgba(22, 22, 31, 0.5);
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #06b6d4;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-primary: #fafafa;
+            --text-secondary: #94a3b8;
+            --text-muted: #475569;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --glass-bg: rgba(22, 22, 31, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --orb-opacity: 0.5;
+            --noise-opacity: 0.03;
+            --grid-opacity: 1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1001;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border-subtle);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            border-color: var(--accent-primary);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-primary);
+            transition: transform 0.4s ease, opacity 0.3s ease;
+        }
+
+        .theme-toggle .sun-icon {
+            position: absolute;
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.5);
+        }
+
+        .theme-toggle .moon-icon {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+
+        [data-theme="dark"] .theme-toggle .sun-icon {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+
+        [data-theme="dark"] .theme-toggle .moon-icon {
+            opacity: 0;
+            transform: rotate(90deg) scale(0.5);
+        }
+
+        /* ============================================ */
+        /* NAVIGATION BAR */
+        /* ============================================ */
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
+            box-shadow: 0 4px 30px var(--shadow-color);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 12px 40px;
+            box-shadow: 0 8px 40px var(--shadow-color);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover .nav-logo-icon {
+            transform: rotate(-5deg) scale(1.05);
+        }
+
+        .nav-logo-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-logo-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 20px;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-link.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-cta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 100px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            box-shadow: 0 4px 15px var(--accent-glow);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 16px;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        .nav-cta svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Mobile Navigation */
+        .nav-toggle {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            background: var(--glass-bg);
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 14px 24px;
+            }
+
+            .nav-logo-text {
+                display: none;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--glass-bg);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border-bottom: 1px solid var(--border-subtle);
+                flex-direction: column;
+                padding: 20px;
+                gap: 8px;
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .nav-links.open {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 14px;
+                background: var(--bg-elevated);
+                border-radius: 12px;
+            }
+
+            .nav-link::after {
+                display: none;
+            }
+
+            .nav-cta {
+                width: 100%;
+                justify-content: center;
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .theme-toggle {
+                right: 80px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 12px 16px;
+            }
+
+            .theme-toggle {
+                top: 18px;
+                right: 70px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, border-color 0.3s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .cursor.hovering {
+            transform: scale(2);
+            border-color: var(--accent-secondary);
+        }
+
+        /* Background */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            will-change: transform;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: var(--orb-opacity);
+            will-change: transform;
+            transition: transform 0.1s ease-out, opacity 0.4s ease;
+        }
+
+        /* Layer 1 - Slowest / Furthest back */
+        .orb-1 {
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+        }
+
+        /* Layer 2 - Medium speed */
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-tertiary) 0%, transparent 70%);
+            top: 40%;
+            left: 20%;
+        }
+
+        .orb-4 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+            top: 20%;
+            right: 30%;
+        }
+
+        /* Layer 3 - Fastest / Closest */
+        .orb-5 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+            top: 60%;
+            right: 15%;
+            filter: blur(40px);
+        }
+
+        .orb-6 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--accent-tertiary) 0%, transparent 70%);
+            top: 10%;
+            left: 10%;
+            filter: blur(50px);
+        }
+
+        /* Floating geometric shapes for depth */
+        .parallax-shape {
+            position: absolute;
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            backdrop-filter: blur(2px);
+            background: var(--glass-bg);
+            opacity: 0.5;
+            will-change: transform;
+            transition: opacity 0.4s ease;
+        }
+
+        [data-theme="dark"] .parallax-shape {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .shape-1 {
+            width: 100px;
+            height: 100px;
+            top: 15%;
+            left: 8%;
+            transform: rotate(15deg);
+        }
+
+        .shape-2 {
+            width: 60px;
+            height: 60px;
+            top: 70%;
+            right: 12%;
+            transform: rotate(-20deg);
+            border-radius: 12px;
+        }
+
+        .shape-3 {
+            width: 80px;
+            height: 80px;
+            top: 45%;
+            right: 25%;
+            transform: rotate(45deg);
+            border-radius: 50%;
+        }
+
+        .shape-4 {
+            width: 120px;
+            height: 120px;
+            bottom: 20%;
+            left: 15%;
+            transform: rotate(-10deg);
+            border-radius: 24px;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: var(--noise-opacity);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            transition: opacity 0.4s ease;
+        }
+
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background-image: 
+                linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px),
+                linear-gradient(var(--border-subtle) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: var(--grid-opacity);
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+            transition: opacity 0.4s ease;
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 40px 60px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* Profile Photo */
+        .profile-section {
+            position: relative;
+        }
+
+        .profile-photo-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            object-fit: cover;
+            /* Glassmorphism */
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 8px 32px var(--shadow-color),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-photo-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            z-index: 1;
+            opacity: 0.7;
+            transition: opacity 0.4s ease;
+        }
+
+        .profile-photo-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -30px;
+            border-radius: 50px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: 0;
+            filter: blur(25px);
+            opacity: 0.8;
+            transition: opacity 0.4s ease;
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            /* Glassmorphism */
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 16px var(--shadow-color);
+            border-radius: 100px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: #16a34a;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            z-index: 10;
+            transition: all 0.4s ease;
+        }
+
+        [data-theme="dark"] .status-badge {
+            color: #22c55e;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Info Section */
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .name-title {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .hero-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-name .gradient-text {
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-role {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+        }
+
+        .hero-bio {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .hero-bio strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Quick Stats - Glassmorphism */
+        .quick-stats {
+            display: flex;
+            gap: 16px;
+            padding-top: 8px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            /* Glassmorphism card */
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 12px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .stat-item:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 12px;
+            padding-top: 8px;
+        }
+
+        .social-link {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            /* Glassmorphism */
+            border: 1px solid var(--border-subtle);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .social-link:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-4px);
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 12px 28px var(--accent-glow);
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Responsive Hero */
+        @media (max-width: 800px) {
+            .hero {
+                padding: 60px 24px 40px;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .profile-section {
+                display: flex;
+                justify-content: center;
+            }
+
+            .profile-photo-wrapper {
+                width: 160px;
+                height: 160px;
+            }
+
+            .info-section {
+                align-items: center;
+            }
+
+            .name-title {
+                align-items: center;
+            }
+
+            .hero-bio {
+                text-align: center;
+            }
+
+            .quick-stats {
+                justify-content: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Filter Bar - Glassmorphism */
+        .filter-bar {
+            position: sticky;
+            top: 72px;
+            z-index: 99;
+            padding: 16px 40px;
+            /* Enhanced Glassmorphism */
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
+            box-shadow: 0 4px 30px var(--shadow-color);
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            transition: all 0.4s ease;
+        }
+
+        .filter-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 18px;
+            /* Glassmorphism buttons */
+            border: 1px solid var(--border-subtle);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-muted);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+            background: var(--bg-elevated);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        /* Compact Timeline */
+        .timeline-section {
+            padding: 40px 40px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .timeline-container {
+            position: relative;
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Year Labels Column */
+        .year-column {
+            flex-shrink: 0;
+            width: 60px;
+            position: relative;
+        }
+
+        .year-track {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg, 
+                var(--accent-primary) 0%,
+                var(--accent-secondary) 50%,
+                var(--accent-tertiary) 100%
+            );
+            opacity: 0.3;
+        }
+
+        .year-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            background: var(--bg-deep);
+            padding: 4px 0;
+            z-index: 2;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Compact Project Card - Glassmorphism */
+        .project-card {
+            /* Glassmorphism base */
+            background: var(--bg-card);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 20px 24px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 4px 24px var(--shadow-color),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                var(--accent-glow),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+            transform: translateX(8px) translateY(-4px) scale(1.01);
+            box-shadow: 
+                0 20px 50px var(--shadow-color),
+                0 0 80px var(--accent-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .project-card:hover::before,
+        .project-card:hover::after {
+            opacity: 1;
+        }
+
+        .project-card.featured {
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.1) 0%,
+                var(--bg-card) 100%
+            );
+            border-color: rgba(59, 130, 246, 0.2);
+            box-shadow: 
+                0 4px 24px var(--shadow-color),
+                0 0 40px var(--accent-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card.hidden {
+            display: none;
+        }
+
+        /* Card Left Section */
+        .card-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .project-icon {
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Glassmorphism */
+            background: rgba(59, 130, 246, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1) rotate(-5deg);
+            background: rgba(59, 130, 246, 0.2);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        }
+
+        .card-date-complexity {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .project-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .complexity-dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .complexity-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border-subtle);
+            transition: all 0.3s ease;
+        }
+
+        .complexity-dot.filled {
+            background: var(--accent-primary);
+        }
+
+        .project-card:hover .complexity-dot.filled {
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        /* Card Center Section */
+        .card-center {
+            min-width: 0;
+        }
+
+        .card-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .category-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 100px;
+            /* Glassmorphism */
+            background: rgba(59, 130, 246, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: var(--accent-primary);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            white-space: nowrap;
+        }
+
+        .featured-tag {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            box-shadow: 0 2px 10px var(--accent-glow);
+        }
+
+        .status-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            color: #16a34a;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        [data-theme="dark"] .status-live {
+            color: #22c55e;
+        }
+
+        .status-live::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .project-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Card Right Section - Specs Preview */
+        .card-right {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .specs-preview {
+            display: flex;
+            gap: 20px;
+        }
+
+        .spec-mini {
+            text-align: right;
+        }
+
+        .spec-mini-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-tertiary);
+            font-weight: 700;
+        }
+
+        .spec-mini-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .expand-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            /* Glassmorphism */
+            border: 1px solid var(--border-subtle);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .expand-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: scale(1.15);
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .expand-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card.expanded .expand-btn svg {
+            transform: rotate(180deg);
+        }
+
+        /* Expanded Content */
+        .expanded-content {
+            grid-column: 1 / -1;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .project-card.expanded .expanded-content {
+            max-height: 400px;
+            padding-top: 20px;
+            opacity: 1;
+        }
+
+        .expanded-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .specs-full {
+            /* Glassmorphism */
+            background: var(--bg-elevated);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 16px;
+            transition: all 0.4s ease;
+        }
+
+        .specs-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .spec-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .spec-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-tertiary);
+            font-weight: 700;
+        }
+
+        .tech-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tech-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            padding: 6px 10px;
+            /* Glassmorphism */
+            background: var(--bg-elevated);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.2s ease;
+        }
+
+        .tech-tag:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            flex: 1;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        .action-btn.secondary {
+            /* Glassmorphism */
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .action-btn.secondary:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* ============================================ */
+        /* CONTACT SECTION */
+        /* ============================================ */
+
+        .contact-section {
+            padding: 100px 40px;
+            background: var(--bg-elevated);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .contact-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .contact-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .contact-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .contact-description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px 28px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .contact-card:hover {
+            transform: translateX(8px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 8px 40px var(--accent-glow);
+        }
+
+        .contact-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(59, 130, 246, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--accent-primary);
+        }
+
+        .contact-card:hover .contact-card-icon {
+            background: var(--accent-primary);
+        }
+
+        .contact-card:hover .contact-card-icon svg {
+            color: white;
+        }
+
+        .contact-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .contact-card-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .contact-card-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .contact-card-arrow {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .contact-card-arrow {
+            color: var(--accent-primary);
+            transform: translateX(5px);
+        }
+
+        .contact-footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .contact-footer p {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .contact-section {
+                padding: 60px 20px;
+            }
+
+            .contact-card {
+                padding: 20px;
+            }
+
+            .contact-card-icon {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .project-card {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .card-left {
+                justify-content: space-between;
+            }
+
+            .card-right {
+                justify-content: space-between;
+                border-top: 1px solid var(--border-subtle);
+                padding-top: 12px;
+            }
+
+            .expanded-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .year-column {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 20px 30px;
+            }
+
+            .filter-bar {
+                padding: 12px 20px;
+            }
+
+            .timeline-section {
+                padding: 24px 16px 60px;
+            }
+
+            .project-card {
+                padding: 16px;
+            }
+
+            .specs-preview {
+                display: none;
+            }
+
+            .card-right {
+                border: none;
+                padding: 0;
+                justify-content: flex-end;
+            }
+        }
+
+        ::selection {
+            background: var(--accent-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </button>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="nav-logo">
+            <div class="nav-logo-icon">M</div>
+            <div class="nav-logo-text">
+                <span class="nav-logo-name">Matt</span>
+                <span class="nav-logo-title">Hardware Engineer</span>
+            </div>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#about" class="nav-link active">About</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="#" class="nav-cta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Resume
+            </a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <div class="bg-container">
+        <!-- Parallax Layer 1 - Slowest (furthest) -->
+        <div class="parallax-layer" data-speed="0.02">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+        </div>
+        <!-- Parallax Layer 2 - Medium -->
+        <div class="parallax-layer" data-speed="0.05">
+            <div class="gradient-orb orb-3"></div>
+            <div class="gradient-orb orb-4"></div>
+        </div>
+        <!-- Parallax Layer 3 - Fastest (closest) -->
+        <div class="parallax-layer" data-speed="0.08">
+            <div class="gradient-orb orb-5"></div>
+            <div class="gradient-orb orb-6"></div>
+        </div>
+        <!-- Floating geometric shapes -->
+        <div class="parallax-layer" data-speed="0.03">
+            <div class="parallax-shape shape-1"></div>
+            <div class="parallax-shape shape-2"></div>
+        </div>
+        <div class="parallax-layer" data-speed="0.06">
+            <div class="parallax-shape shape-3"></div>
+            <div class="parallax-shape shape-4"></div>
+        </div>
+    </div>
+    <div class="noise"></div>
+    <div class="grid-lines"></div>
+
+    <div class="main-container">
+        <!-- Hero / Personal Intro -->
+        <header class="hero" id="about">
+            <div class="hero-content">
+                <div class="profile-section">
+                    <div class="profile-photo-wrapper">
+                        <div class="profile-photo">
+                            <!-- Replace the emoji with an img tag pointing to your headshot -->
+                            <!-- <img src="your-photo.jpg" alt="Matt"> -->
+                            👨‍💻
+                        </div>
+                        <div class="status-badge">Open to Work</div>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <div class="name-title">
+                        <h1 class="hero-name"><span class="gradient-text">Matt</span></h1>
+                        <p class="hero-role">Hardware Engineer</p>
+                    </div>
+                    <p class="hero-bio">
+                        I'm a hardware engineer passionate about pushing the boundaries of what's possible at the silicon level. My journey started with <strong>fixing phones in middle school</strong> and has evolved into <strong>cutting-edge GaN semiconductor research</strong>. I specialize in analog circuits, power electronics, and digital systems — bridging the gap between theoretical design and practical implementation.
+                    </p>
+                    <div class="quick-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">10+</span>
+                            <span class="stat-label">Years</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">8</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">4</span>
+                            <span class="stat-label">Domains</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Email">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Resume">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filter Bar -->
+        <!-- Projects Section -->
+        <nav class="filter-bar" id="projects">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="analog">Analog</button>
+            <button class="filter-btn" data-filter="digital">Digital</button>
+            <button class="filter-btn" data-filter="power">Power</button>
+            <button class="filter-btn" data-filter="research">Research</button>
+        </nav>
+
+        <!-- Compact Timeline -->
+        <section class="timeline-section">
+            <div class="timeline-container">
+                <div class="year-column">
+                    <div class="year-track"></div>
+                    <span class="year-marker" style="top: 2%;">2015</span>
+                    <span class="year-marker" style="top: 16%;">2019</span>
+                    <span class="year-marker" style="top: 28%;">2020</span>
+                    <span class="year-marker" style="top: 40%;">2021</span>
+                    <span class="year-marker" style="top: 52%;">2022</span>
+                    <span class="year-marker" style="top: 64%;">2023</span>
+                    <span class="year-marker" style="top: 78%;">2024</span>
+                    <span class="year-marker" style="top: 92%;">Now</span>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Phone Repair -->
+                    <article class="project-card featured" data-category="analog">
+                        <div class="card-left">
+                            <div class="project-icon">📱</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2015–2017</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot"></span>
+                                    <span class="complexity-dot"></span>
+                                    <span class="complexity-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">Phone Repair</h3>
+                                <span class="category-tag featured-tag">Origin</span>
+                            </div>
+                            <p class="project-description">Where it all began — running a repair service from my bedroom, learning electronics through hands-on troubleshooting, schematic reading, and precision soldering.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">200+</div>
+                                    <div class="spec-mini-label">Devices</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">94%</div>
+                                    <div class="spec-mini-label">Success</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">Key Metrics</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Devices Repaired</span>
+                                            <span class="spec-value">200+</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Success Rate</span>
+                                            <span class="spec-value">94%</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Component Level</span>
+                                            <span class="spec-value">0402 SMD</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Turnaround</span>
+                                            <span class="spec-value">&lt;24 hrs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Soldering</span>
+                                        <span class="tech-tag">Diagnostics</span>
+                                        <span class="tech-tag">Schematics</span>
+                                        <span class="tech-tag">Hot Air</span>
+                                        <span class="tech-tag">Microscopy</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">📸 Gallery</button>
+                                        <button class="action-btn secondary">📖 Story</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Op-Amp -->
+                    <article class="project-card" data-category="analog">
+                        <div class="card-left">
+                            <div class="project-icon">⚡</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2019</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">Precision Op-Amp Design</h3>
+                                <span class="category-tag">Analog</span>
+                            </div>
+                            <p class="project-description">Instrumentation amplifier with chopper stabilization achieving exceptional DC accuracy for medical-grade sensor interface applications.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">&lt;50µV</div>
+                                    <div class="spec-mini-label">Offset</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">120dB</div>
+                                    <div class="spec-mini-label">CMRR</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">Performance</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Input Offset</span>
+                                            <span class="spec-value">&lt;50µV</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">CMRR</span>
+                                            <span class="spec-value">&gt;120dB</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Bandwidth</span>
+                                            <span class="spec-value">10MHz</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Noise</span>
+                                            <span class="spec-value">8nV/√Hz</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">LTspice</span>
+                                        <span class="tech-tag">Altium</span>
+                                        <span class="tech-tag">Chopper</span>
+                                        <span class="tech-tag">4-Layer PCB</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">📐 Schematic</button>
+                                        <button class="action-btn secondary">📊 Results</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Motor Driver -->
+                    <article class="project-card" data-category="power">
+                        <div class="card-left">
+                            <div class="project-icon">🔋</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2020</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">High-Current Motor Driver</h3>
+                                <span class="category-tag">Power</span>
+                            </div>
+                            <p class="project-description">High-efficiency H-bridge with synchronous rectification and adaptive dead-time for robotics applications.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">30A</div>
+                                    <div class="spec-mini-label">Current</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">&gt;95%</div>
+                                    <div class="spec-mini-label">Efficiency</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">Specifications</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Continuous</span>
+                                            <span class="spec-value">30A</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Voltage</span>
+                                            <span class="spec-value">12–48V</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Efficiency</span>
+                                            <span class="spec-value">&gt;95%</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">PWM</span>
+                                            <span class="spec-value">100kHz</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">GaN FETs</span>
+                                        <span class="tech-tag">Gate Drivers</span>
+                                        <span class="tech-tag">Thermal</span>
+                                        <span class="tech-tag">STM32</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">⚙️ Details</button>
+                                        <button class="action-btn secondary">🎬 Demo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Drink Mixer -->
+                    <article class="project-card" data-category="digital">
+                        <div class="card-left">
+                            <div class="project-icon">🍹</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2021</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot"></span>
+                                    <span class="complexity-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">Automated Drink Mixer</h3>
+                                <span class="category-tag">Mechatronics</span>
+                            </div>
+                            <p class="project-description">Precision cocktail system with peristaltic pumps, load cell feedback, and touchscreen interface for automated mixing.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">±0.5mL</div>
+                                    <div class="spec-mini-label">Accuracy</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">12</div>
+                                    <div class="spec-mini-label">Slots</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">System</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Accuracy</span>
+                                            <span class="spec-value">±0.5mL</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Slots</span>
+                                            <span class="spec-value">12</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Recipes</span>
+                                            <span class="spec-value">500+</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Cycle</span>
+                                            <span class="spec-value">&lt;30s</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Raspberry Pi</span>
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">Peristaltic</span>
+                                        <span class="tech-tag">Load Cells</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">🎬 Demo</button>
+                                        <button class="action-btn secondary">📝 API</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- RISC-V -->
+                    <article class="project-card" data-category="digital">
+                        <div class="card-left">
+                            <div class="project-icon">🖥️</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2022</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">RISC-V Processor Design</h3>
+                                <span class="category-tag">Digital</span>
+                            </div>
+                            <p class="project-description">Complete RV32IM implementation with 5-stage pipeline, hazard detection, forwarding, and FPGA synthesis.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">100MHz</div>
+                                    <div class="spec-mini-label">Clock</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">5-Stage</div>
+                                    <div class="spec-mini-label">Pipeline</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">Architecture</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">ISA</span>
+                                            <span class="spec-value">RV32I+M</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Pipeline</span>
+                                            <span class="spec-value">5-Stage</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Clock</span>
+                                            <span class="spec-value">100MHz</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Cache</span>
+                                            <span class="spec-value">16KB I/D</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">SystemVerilog</span>
+                                        <span class="tech-tag">Vivado</span>
+                                        <span class="tech-tag">FPGA</span>
+                                        <span class="tech-tag">Verilator</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">💻 Source</button>
+                                        <button class="action-btn secondary">📈 Bench</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Transistor Materials -->
+                    <article class="project-card" data-category="research">
+                        <div class="card-left">
+                            <div class="project-icon">🔬</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2023</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">Transistor Material Optimization</h3>
+                                <span class="category-tag">Research</span>
+                            </div>
+                            <p class="project-description">Systematic characterization of novel channel materials with automated measurement routines for advanced node development.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">2.3×</div>
+                                    <div class="spec-mini-label">Mobility</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">1200+</div>
+                                    <div class="spec-mini-label">Devices</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">Outcomes</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Mobility</span>
+                                            <span class="spec-value">2.3× gain</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">SS</span>
+                                            <span class="spec-value">15mV/dec</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Devices</span>
+                                            <span class="spec-value">1,200+</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Temp</span>
+                                            <span class="spec-value">-40–150°C</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Device Physics</span>
+                                        <span class="tech-tag">Extraction</span>
+                                        <span class="tech-tag">Cryo</span>
+                                        <span class="tech-tag">Python</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">📄 Paper</button>
+                                        <button class="action-btn secondary">📊 Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Battery Economics -->
+                    <article class="project-card" data-category="research">
+                        <div class="card-left">
+                            <div class="project-icon">⚡</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2024</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">Grid-Scale Battery Economics</h3>
+                                <span class="category-tag">Research</span>
+                            </div>
+                            <p class="project-description">Techno-economic models for grid storage analyzing degradation, markets, and optimization across 7 ISOs.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">100MW</div>
+                                    <div class="spec-mini-label">Scale</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">&gt;12%</div>
+                                    <div class="spec-mini-label">IRR</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">Scope</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Scale</span>
+                                            <span class="spec-value">100MW</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Horizon</span>
+                                            <span class="spec-value">20 Years</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">IRR</span>
+                                            <span class="spec-value">&gt;12%</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Markets</span>
+                                            <span class="spec-value">7 ISOs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">Economics</span>
+                                        <span class="tech-tag">Degradation</span>
+                                        <span class="tech-tag">Markets</span>
+                                        <span class="tech-tag">Julia</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">📊 Dashboard</button>
+                                        <button class="action-btn secondary">📄 Paper</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- GaN Research -->
+                    <article class="project-card" data-category="research">
+                        <div class="card-left">
+                            <div class="project-icon">🧪</div>
+                            <div class="card-date-complexity">
+                                <span class="project-date">2024–Now</span>
+                                <div class="complexity-dots">
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                    <span class="complexity-dot filled"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-center">
+                            <div class="card-title-row">
+                                <h3 class="project-title">GaN FET Dynamic R<sub>DS(on)</sub></h3>
+                                <span class="category-tag">Research</span>
+                                <span class="status-live">Active</span>
+                            </div>
+                            <p class="project-description">Investigating dynamic on-resistance in GaN power transistors with automated SCPI testbench across 162 parameter combinations.</p>
+                        </div>
+                        <div class="card-right">
+                            <div class="specs-preview">
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">650V</div>
+                                    <div class="spec-mini-label">Voltage</div>
+                                </div>
+                                <div class="spec-mini">
+                                    <div class="spec-mini-value">100ns</div>
+                                    <div class="spec-mini-label">Resolution</div>
+                                </div>
+                            </div>
+                            <button class="expand-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="expanded-content">
+                            <div class="expanded-inner">
+                                <div class="specs-full">
+                                    <div class="specs-title">Test System</div>
+                                    <div class="specs-grid">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Voltage</span>
+                                            <span class="spec-value">0–650V</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Current</span>
+                                            <span class="spec-value">0–50A</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Temp</span>
+                                            <span class="spec-value">25–150°C</span>
+                                        </div>
+                                        <div class="spec-item">
+                                            <span class="spec-label">Resolution</span>
+                                            <span class="spec-value">100ns</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tech-actions">
+                                    <div class="tech-stack">
+                                        <span class="tech-tag">GaN</span>
+                                        <span class="tech-tag">SCPI</span>
+                                        <span class="tech-tag">Traps</span>
+                                        <span class="tech-tag">Python GUI</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="action-btn primary">🔬 Overview</button>
+                                        <button class="action-btn secondary">📈 Live</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-container">
+                <div class="contact-header">
+                    <span class="contact-label">Get In Touch</span>
+                    <h2 class="contact-title">Let's Build Something Together</h2>
+                    <p class="contact-description">
+                        Whether you have a project in mind, want to discuss opportunities, or just want to chat about hardware engineering — I'd love to hear from you.
+                    </p>
+                </div>
+                <div class="contact-cards">
+                    <a href="mailto:matt@example.com" class="contact-card">
+                        <div class="contact-card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <div class="contact-card-content">
+                            <span class="contact-card-label">Email</span>
+                            <span class="contact-card-value">matt@example.com</span>
+                        </div>
+                        <div class="contact-card-arrow">→</div>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="contact-card">
+                        <div class="contact-card-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-card-content">
+                            <span class="contact-card-label">LinkedIn</span>
+                            <span class="contact-card-value">Connect with me</span>
+                        </div>
+                        <div class="contact-card-arrow">→</div>
+                    </a>
+                    <a href="https://github.com" target="_blank" class="contact-card">
+                        <div class="contact-card-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-card-content">
+                            <span class="contact-card-label">GitHub</span>
+                            <span class="contact-card-value">View my code</span>
+                        </div>
+                        <div class="contact-card-arrow">→</div>
+                    </a>
+                </div>
+                <div class="contact-footer">
+                    <p>© 2024 Matt. Built with passion for hardware.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ============================================
+        // THEME TOGGLE
+        // ============================================
+        
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+        }
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme === 'light' ? '' : 'dark');
+            localStorage.setItem('theme', newTheme === 'light' ? '' : 'dark');
+            
+            // Add a little animation feedback
+            themeToggle.style.transform = 'scale(0.9) rotate(180deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 300);
+        });
+
+        // ============================================
+        // NAVIGATION BAR
+        // ============================================
+        
+        const navbar = document.getElementById('navbar');
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        const navLinkItems = document.querySelectorAll('.nav-link');
+        
+        // Mobile menu toggle
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navLinks.classList.toggle('open');
+        });
+        
+        // Close mobile menu when a link is clicked
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('open');
+            });
+        });
+        
+        // Navbar scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+            
+            // Add scrolled class for compact navbar
+            if (currentScroll > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Active nav link based on scroll position
+        const sections = document.querySelectorAll('section[id], header[id]');
+        
+        function updateActiveNav() {
+            const scrollPosition = window.scrollY + 150;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinkItems.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+
+        // ============================================
+        // CUSTOM CURSOR
+        // ============================================
+        
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let dotX = 0, dotY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+
+            dotX += (mouseX - dotX) * 0.25;
+            dotY += (mouseY - dotY) * 0.25;
+            cursorDot.style.left = dotX - 3 + 'px';
+            cursorDot.style.top = dotY - 3 + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover effects
+        const hoverElements = document.querySelectorAll('button, a, .project-card, .tech-tag');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+        });
+
+        // Hide cursor on touch
+        if ('ontouchstart' in window) {
+            cursor.style.display = 'none';
+            cursorDot.style.display = 'none';
+        }
+
+        // ============================================
+        // PARALLAX EFFECTS
+        // ============================================
+        
+        const parallaxLayers = document.querySelectorAll('.parallax-layer');
+        const orbs = document.querySelectorAll('.gradient-orb');
+        const shapes = document.querySelectorAll('.parallax-shape');
+        
+        let scrollY = 0;
+        let targetScrollY = 0;
+        let currentScrollY = 0;
+        
+        // Smooth scroll tracking
+        window.addEventListener('scroll', () => {
+            targetScrollY = window.scrollY;
+        });
+        
+        // Mouse position for parallax
+        let mouseParallaxX = 0;
+        let mouseParallaxY = 0;
+        let targetMouseX = 0;
+        let targetMouseY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+        
+        // Parallax animation loop
+        function updateParallax() {
+            // Smooth interpolation for scroll
+            currentScrollY += (targetScrollY - currentScrollY) * 0.1;
+            
+            // Smooth interpolation for mouse
+            mouseParallaxX += (targetMouseX - mouseParallaxX) * 0.05;
+            mouseParallaxY += (targetMouseY - mouseParallaxY) * 0.05;
+            
+            // Apply parallax to layers based on scroll
+            parallaxLayers.forEach(layer => {
+                const speed = parseFloat(layer.dataset.speed) || 0.05;
+                const yOffset = currentScrollY * speed * -1;
+                const xMouseOffset = mouseParallaxX * 30 * speed * 10;
+                const yMouseOffset = mouseParallaxY * 20 * speed * 10;
+                
+                layer.style.transform = `translate3d(${xMouseOffset}px, ${yOffset + yMouseOffset}px, 0)`;
+            });
+            
+            // Additional individual orb movement for more dynamic feel
+            orbs.forEach((orb, index) => {
+                const baseSpeed = 0.02 + (index * 0.01);
+                const xOffset = mouseParallaxX * (20 + index * 10);
+                const yOffset = mouseParallaxY * (15 + index * 8);
+                const rotation = mouseParallaxX * (5 + index * 2);
+                
+                orb.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${rotation}deg) scale(${1 + Math.abs(mouseParallaxX) * 0.05})`;
+            });
+            
+            // Floating shapes with rotation
+            shapes.forEach((shape, index) => {
+                const xOffset = mouseParallaxX * (25 + index * 8);
+                const yOffset = mouseParallaxY * (20 + index * 6);
+                const rotation = 15 + mouseParallaxX * 15 + (index * 20);
+                
+                shape.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${rotation}deg)`;
+            });
+            
+            requestAnimationFrame(updateParallax);
+        }
+        updateParallax();
+
+        // ============================================
+        // CARD INTERACTIONS
+        // ============================================
+
+        // Card mouse tracking for glow effect
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', x + '%');
+                card.style.setProperty('--mouse-y', y + '%');
+            });
+        });
+
+        // Expand/Collapse cards
+        document.querySelectorAll('.expand-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = btn.closest('.project-card');
+                card.classList.toggle('expanded');
+            });
+        });
+
+        // Also expand on card click
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (!e.target.closest('.action-btn') && !e.target.closest('.expand-btn') && !e.target.closest('.tech-tag')) {
+                    card.classList.toggle('expanded');
+                }
+            });
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                projectCards.forEach((card, index) => {
+                    const category = card.dataset.category;
+
+                    if (filter === 'all' || category === filter) {
+                        card.classList.remove('hidden');
+                        card.style.animationDelay = (index * 0.05) + 's';
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // ============================================
+        // SCROLL-BASED PARALLAX FOR HERO ELEMENTS
+        // ============================================
+        
+        const heroContent = document.querySelector('.hero-content');
+        const profileSection = document.querySelector('.profile-section');
+        const infoSection = document.querySelector('.info-section');
+        
+        function updateHeroParallax() {
+            const scrolled = window.scrollY;
+            const heroHeight = document.querySelector('.hero').offsetHeight;
+            
+            if (scrolled < heroHeight) {
+                const progress = scrolled / heroHeight;
+                
+                if (profileSection) {
+                    profileSection.style.transform = `translateY(${scrolled * 0.3}px) scale(${1 - progress * 0.1})`;
+                    profileSection.style.opacity = 1 - progress * 0.8;
+                }
+                
+                if (infoSection) {
+                    infoSection.style.transform = `translateY(${scrolled * 0.15}px)`;
+                    infoSection.style.opacity = 1 - progress * 0.6;
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', updateHeroParallax);
+        updateHeroParallax();
+    </script>
+</body>
+</html>
