@@ -1,242 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matthew De Jesus &bull; Hardware Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matthew De Jesus — Power Electronics & Hardware Engineer</title>
+  <meta name="description" content="Portfolio of Matthew De Jesus — MIT MEng candidate in power electronics, GaN device characterization, and hardware design." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Matthew De Jesus — Power Electronics & Hardware Engineer" />
+  <meta property="og:description" content="MIT MEng candidate designing high-efficiency power converters, characterizing GaN devices, and building hardware from the transistor up." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#fbfcfd" />
+
+  <!-- Set theme before first paint to avoid a light/dark flash -->
+  <script>
+    (() => {
+      try {
+        const stored = localStorage.getItem("theme");
+        const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+        const theme = stored || (dark ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]')
+          ?.setAttribute("content", theme === "dark" ? "#0a0f14" : "#fbfcfd");
+      } catch { /* default stays light */ }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d9488'/%3E%3Cpath d='M7 16h4l2-6 4 12 2-6h6' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 </head>
 <body>
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-    </button>
+  <!-- Skip link for accessibility -->
+  <a href="#main" class="skip-link">Skip to content</a>
 
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <a href="#" class="nav-logo">
-            <div class="nav-logo-icon">M</div>
-            <div class="nav-logo-text">
-                <span class="nav-logo-name">Matthew De Jesus</span>
-                <span class="nav-logo-title">Hardware Engineer</span>
-            </div>
-        </a>
-        <div class="nav-links" id="navLinks">
-            <a href="#about" class="nav-link active">About</a>
-            <a href="#projects" class="nav-link">Projects</a>
-            <a href="#contact" class="nav-link">Contact</a>
-            <a href="#" class="nav-cta">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                </svg>
-                Resume
-            </a>
-        </div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-            <span></span>
-            <span></span>
-            <span></span>
+  <!-- Scroll progress (signal level) -->
+  <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+  <!-- ===== Navigation ===== -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="#top" class="brand" aria-label="Home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 40 24" width="34" height="20">
+            <path d="M2 12h8l3-8 6 16 3-8h8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="2" cy="12" r="2.4" fill="currentColor"/>
+            <circle cx="38" cy="12" r="2.4" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand__name">M. De&nbsp;Jesus</span>
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#timeline">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#publications">Publications</a>
+        <a href="#beyond">Beyond</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.6" y1="4.6" x2="6.4" y2="6.4"/><line x1="17.6" y1="17.6" x2="19.4" y2="19.4"/><line x1="4.6" y1="19.4" x2="6.4" y2="17.6"/><line x1="17.6" y1="6.4" x2="19.4" y2="4.6"/></g></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.8A8.5 8.5 0 1111.2 3a6.6 6.6 0 009.8 9.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
         </button>
-    </nav>
-
-    <div class="cursor"></div>
-    <div class="cursor-dot"></div>
-
-    <div class="bg-container">
-        <!-- Parallax Layer 1 - Slowest (furthest) -->
-        <div class="parallax-layer" data-speed="0.02">
-            <div class="gradient-orb orb-1"></div>
-            <div class="gradient-orb orb-2"></div>
-        </div>
-        <!-- Parallax Layer 2 - Medium -->
-        <div class="parallax-layer" data-speed="0.05">
-            <div class="gradient-orb orb-3"></div>
-            <div class="gradient-orb orb-4"></div>
-        </div>
-        <!-- Parallax Layer 3 - Fastest (closest) -->
-        <div class="parallax-layer" data-speed="0.08">
-            <div class="gradient-orb orb-5"></div>
-            <div class="gradient-orb orb-6"></div>
-        </div>
-        <!-- Floating geometric shapes -->
-        <div class="parallax-layer" data-speed="0.03">
-            <div class="parallax-shape shape-1"></div>
-            <div class="parallax-shape shape-2"></div>
-        </div>
-        <div class="parallax-layer" data-speed="0.06">
-            <div class="parallax-shape shape-3"></div>
-            <div class="parallax-shape shape-4"></div>
-        </div>
+        <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
-    <div class="noise"></div>
-    <div class="grid-lines"></div>
+  </header>
 
-    <div class="main-container">
-        <!-- Hero / Personal Intro -->
-        <header class="hero" id="about">
-            <div class="hero-content">
-                <div class="profile-section">
-                    <div class="profile-photo-wrapper">
-                        <div class="profile-photo">
-                                <img src="profile.png" alt="Matthew's profile photo">
-                        </div>
-                        <div class="status-badge">Open to Work</div>
-                    </div>
-                </div>
-                <div class="info-section">
-                    <div class="name-title">
-                        <h1 class="hero-name"><span class="gradient-text">Matthew</span></h1>
-                        <p class="hero-role">Hardware Engineer</p>
-                    </div>
-                    <p class="hero-bio">
-                        I'm a hardware engineer passionate about pushing the boundaries of what's possible at the silicon level. My journey started with <strong>fixing phones in middle school</strong> and has evolved into <strong>cutting-edge GaN semiconductor research</strong>. I specialize in analog circuits, power electronics, and digital systems &mdash; bridging the gap between theoretical design and practical implementation.
-                    </p>
-                    <div class="quick-stats">
-                        <div class="stat-item">
-                            <span class="stat-value">10+</span>
-                            <span class="stat-label">Years</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">8</span>
-                            <span class="stat-label">Projects</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value">4</span>
-                            <span class="stat-label">Domains</span>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" class="social-link" title="GitHub">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link" title="LinkedIn">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link" title="Email">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link" title="Resume">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10 9 9 9 8 9"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+  <main id="main">
+    <span id="top"></span>
+
+    <!-- ===== Hero + About (combined intro) ===== -->
+    <section class="hero" id="about">
+      <div class="hero__grid" aria-hidden="true"></div>
+      <svg class="hero__traces" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <path id="t1" pathLength="1000" d="M-20,150 H280 q18,0 18,18 V292 q0,18 18,18 H1220" />
+          <path id="t2" pathLength="1000" d="M1220,210 H940 q-18,0 -18,18 V430 q0,18 -18,18 H560" />
+          <path id="t3" pathLength="1000" d="M-20,470 H220 q18,0 18,-18 V300 q0,-18 18,-18 H470" />
+          <path id="t4" pathLength="1000" d="M380,620 V470 q0,-18 18,-18 H980 q18,0 18,-18 V200 q0,-18 18,-18 H1220" />
+          <path id="t5" pathLength="1000" d="M520,-20 V120 q0,18 18,18 H760" />
+        </defs>
+        <g class="trace-base">
+          <use href="#t1" /><use href="#t2" /><use href="#t3" /><use href="#t4" /><use href="#t5" />
+        </g>
+        <g class="trace-pulse">
+          <use href="#t1" /><use href="#t2" /><use href="#t3" /><use href="#t4" /><use href="#t5" />
+        </g>
+        <g class="trace-nodes">
+          <circle cx="298" cy="168" r="3.5" /><circle cx="940" cy="228" r="3.5" />
+          <circle cx="238" cy="452" r="3.5" /><circle cx="998" cy="434" r="3.5" />
+          <circle cx="538" cy="138" r="3.5" /><circle cx="760" cy="138" r="3.5" />
+        </g>
+      </svg>
+      <div class="container hero__inner">
+        <p class="kicker" id="heroKicker">// power electronics · hardware · ip</p>
+        <h1 class="hero__title" id="heroName">Matthew De Jesus</h1>
+        <p class="hero__role" id="heroRole"></p>
+
+        <div class="hero__body">
+          <div class="hero__intro">
+            <p class="hero__tagline" id="heroTagline"></p>
+            <div class="about__body" id="aboutBody"></div>
+            <div class="hero__cta">
+              <a href="#projects" class="btn btn--primary">View Projects</a>
+              <a href="#" class="btn btn--ghost" id="heroResume" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Résumé
+              </a>
+              <a href="#contact" class="btn btn--ghost">Get in touch</a>
             </div>
-        </header>
+          </div>
 
-        <!-- Filter Bar -->
-        <nav class="filter-bar" id="projects">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="analog">Analog</button>
-            <button class="filter-btn" data-filter="digital">Digital</button>
-            <button class="filter-btn" data-filter="power">Power</button>
-            <button class="filter-btn" data-filter="research">Research</button>
-        </nav>
+          <figure class="hero__portrait" id="heroPortrait" hidden></figure>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span></span> scroll
+      </div>
+    </section>
 
-        <!-- Timeline -->
-        <section class="timeline-section">
-            <div class="timeline-container">
-                <div class="year-column">
-                    <div class="year-track"></div>
-                    <span class="year-marker" style="top: 2%;">2015</span>
-                    <span class="year-marker" style="top: 16%;">2019</span>
-                    <span class="year-marker" style="top: 28%;">2020</span>
-                    <span class="year-marker" style="top: 40%;">2021</span>
-                    <span class="year-marker" style="top: 52%;">2022</span>
-                    <span class="year-marker" style="top: 64%;">2023</span>
-                    <span class="year-marker" style="top: 78%;">2024</span>
-                    <span class="year-marker" style="top: 92%;">Now</span>
-                </div>
+    <div class="trace-divider" aria-hidden="true"></div>
 
-                <!-- Project cards rendered by main.js -->
-                <div class="projects-grid"></div>
-            </div>
-        </section>
+    <!-- ===== Timeline ===== -->
+    <section class="section" id="timeline">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="kicker">// 01 — experience &amp; education</p>
+          <h2 class="section__title">Timeline</h2>
+          <div class="filters" id="timelineFilters" role="tablist" aria-label="Filter timeline">
+            <button class="filter is-active" data-filter="all">All</button>
+            <button class="filter" data-filter="experience">Experience</button>
+            <button class="filter" data-filter="education">Education</button>
+          </div>
+        </div>
+        <ol class="timeline" id="timelineList"></ol>
+      </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section class="contact-section" id="contact">
-            <div class="contact-container">
-                <div class="contact-header">
-                    <span class="contact-label">Get In Touch</span>
-                    <h2 class="contact-title">Let's Build Something Together</h2>
-                    <p class="contact-description">
-                        Whether you have a project in mind, want to discuss opportunities, or just want to chat about hardware engineering &mdash; I'd love to hear from you.
-                    </p>
-                </div>
-                <div class="contact-cards">
-                    <a href="mailto:dejesus@mit.edu" class="contact-card">
-                        <div class="contact-card-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                        </div>
-                        <div class="contact-card-content">
-                            <span class="contact-card-label">Email</span>
-                            <span class="contact-card-value">dejesus@mit.edu</span>
-                        </div>
-                        <div class="contact-card-arrow">&rarr;</div>
-                    </a>
-                    <a href="https://www.linkedin.com/in/matthew-adam-de-jesus/" target="_blank" class="contact-card">
-                        <div class="contact-card-icon">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                        </div>
-                        <div class="contact-card-content">
-                            <span class="contact-card-label">LinkedIn</span>
-                            <span class="contact-card-value">Connect with me</span>
-                        </div>
-                        <div class="contact-card-arrow">&rarr;</div>
-                    </a>
-                    <a href="https://github.com/MatthewASC20" target="_blank" class="contact-card">
-                        <div class="contact-card-icon">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </div>
-                        <div class="contact-card-content">
-                            <span class="contact-card-label">GitHub</span>
-                            <span class="contact-card-value">View my code</span>
-                        </div>
-                        <div class="contact-card-arrow">&rarr;</div>
-                    </a>
-                </div>
-                <div class="contact-footer">
-                    <p>&copy; 2026 Matthew De Jesus. Built with passion for hardware.</p>
-                </div>
-            </div>
-        </section>
+    <div class="trace-divider" aria-hidden="true"></div>
+
+    <!-- ===== Projects ===== -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="kicker">// 02 — selected work</p>
+          <h2 class="section__title">Projects</h2>
+          <div class="filters" id="projectFilters" aria-label="Filter projects by tag"></div>
+        </div>
+        <div class="projects" id="projectGrid"></div>
+      </div>
+    </section>
+
+    <div class="trace-divider" aria-hidden="true"></div>
+
+    <!-- ===== Publications ===== -->
+    <section class="section" id="publications">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="kicker">// 03 — research</p>
+          <h2 class="section__title">Publications</h2>
+        </div>
+        <div class="pubs" id="pubList"></div>
+      </div>
+    </section>
+
+    <div class="trace-divider" aria-hidden="true"></div>
+
+    <!-- ===== Beyond the Lab ===== -->
+    <section class="section" id="beyond">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="kicker">// 04 — beyond the lab</p>
+          <h2 class="section__title">Beyond the Lab</h2>
+        </div>
+        <div class="beyond" id="beyondGrid"></div>
+      </div>
+    </section>
+
+    <div class="trace-divider" aria-hidden="true"></div>
+
+    <!-- ===== Skills ===== -->
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="kicker">// 05 — toolbox</p>
+          <h2 class="section__title">Skills</h2>
+        </div>
+        <div class="skills" id="skillsGrid"></div>
+      </div>
+    </section>
+
+    <div class="trace-divider" aria-hidden="true"></div>
+
+    <!-- ===== Contact ===== -->
+    <section class="section section--contact" id="contact">
+      <div class="container">
+        <div class="contact reveal">
+          <p class="kicker">// 06 — let's build something</p>
+          <h2 class="section__title">Get in touch</h2>
+          <p class="contact__lead" id="contactLead"></p>
+          <div class="contact__links" id="contactLinks"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="mono-label">© <span id="year"></span> Matthew De Jesus</span>
+      <span class="mono-label footer__sig">designed &amp; built from scratch · <span id="footerStack">html · css · js</span></span>
     </div>
+  </footer>
 
-    <script src="main.js"></script>
+  <!-- ===== Project modal ===== -->
+  <div class="modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel" role="document">
+      <button class="modal__close" data-close aria-label="Close">&times;</button>
+      <div class="modal__content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- ===== Photo lightbox ===== -->
+  <div class="lightbox" id="heroLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lightbox__backdrop" data-lightbox-close></div>
+    <button class="lightbox__close" data-lightbox-close aria-label="Close">&times;</button>
+    <button class="lightbox__nav lightbox__nav--prev" data-lightbox-prev aria-label="Previous photo">&#8249;</button>
+    <button class="lightbox__nav lightbox__nav--next" data-lightbox-next aria-label="Next photo">&#8250;</button>
+    <div class="lightbox__counter" id="lightboxCounter" aria-live="polite"></div>
+    <img class="lightbox__img" id="lightboxImg" alt="" />
+  </div>
+
+  <!-- Error / loading banner -->
+  <div class="loadstate" id="loadState" hidden></div>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

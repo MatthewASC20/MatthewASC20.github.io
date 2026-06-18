@@ -1,0 +1,19 @@
+/* ---------- Publications ---------- */
+.pubs { display: grid; gap: 1.2rem; }
+.pub {
+  background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  border-radius: var(--radius); padding: 1.6rem 1.8rem; box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s, border-left-color 0.25s;
+}
+.pub:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-left-color: var(--accent-bright); }
+.pub__status {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent);
+  background: var(--accent-soft); padding: 0.25rem 0.6rem; border-radius: 6px; margin-bottom: 0.8rem;
+}
+.pub__title { font-size: 1.22rem; font-weight: 700; margin-bottom: 0.5rem; }
+.pub__authors { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.25rem; }
+.pub__authors b { color: var(--text); }
+.pub__venue { font-style: italic; color: var(--text-muted); font-size: 0.92rem; margin-bottom: 0.9rem; }
+.pub__abstract { color: var(--text-muted); font-size: 0.94rem; margin-bottom: 1.1rem; max-width: 80ch; }
+.pub__links { display: flex; flex-wrap: wrap; gap: 0.6rem; }

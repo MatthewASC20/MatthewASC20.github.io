@@ -1,0 +1,28 @@
+{
+  "profile": {
+    "name": "Matthew De Jesus",
+    "firstName": "Matthew",
+    "lastName": "De Jesus",
+    "title": "Power Electronics & Hardware Engineer",
+    "roles": [
+      "Power Electronics Engineer",
+      "Analog IC Designer",
+      "Embedded Systems Engineer",
+      "Hardware Engineer"
+    ],
+    "tagline": "MIT MEng candidate designing high-efficiency power converters, characterizing GaN devices, and building hardware from the transistor up.",
+    "location": "Cambridge, MA",
+    "photo": "assets/photo.jpg",
+    "available": "Open to full-time & internship opportunities",
+    "links": {
+      "email": "matthew.adam.dejesus@gmail.com",
+      "linkedin": "https://linkedin.com/in/matthew-adam-de-jesus/",
+      "github": "https://github.com/MatthewASC20",
+      "resume": "assets/Matthew_De_Jesus_Resume.pdf"
+    },
+    "about": [
+      "I'm a Master of Engineering candidate at MIT working in the Research Laboratory of Electronics, where I design high-frequency PCB test platforms and characterize loss mechanisms in next-generation GaN power transistors. My work spans the full hardware stack — from custom resonant test boards and SCPI-automated instrumentation to the loss models that turn raw measurements into design insight.",
+      "I like problems where physics, circuits, and software meet. That has meant optimizing a synchronous buck converter to 97.8% efficiency with a Python design sweep, taping out a CMOS amplifier in Intel's 22nm process, pipelining a RISC-V CPU, and writing automation that makes lab measurements reproducible. I care about designs that are efficient, well-characterized, and actually buildable."
+    ]
+  }
+}

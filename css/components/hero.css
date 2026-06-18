@@ -1,0 +1,128 @@
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  min-height: min(92vh, 760px);
+  min-height: min(92svh, 760px); /* svh tracks the visible viewport under mobile browser chrome */
+  display: flex; align-items: center;
+  padding-top: var(--nav-h);
+  overflow: hidden;
+}
+.hero__grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 30% 30%, #000 0%, transparent 78%);
+          mask-image: radial-gradient(ellipse 75% 65% at 30% 30%, #000 0%, transparent 78%);
+  opacity: 0.55;
+}
+.hero__inner { position: relative; z-index: 1; padding-block: 4rem; }
+
+/* ---------- Combined intro body: bio + CTA (left), photo (right) ---------- */
+.hero__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(280px, 34%, 400px);
+  grid-template-areas: "intro photo";
+  align-items: start;
+  column-gap: clamp(2rem, 5vw, 4rem);
+}
+.hero__intro { grid-area: intro; min-width: 0; }
+.hero__intro .hero__tagline { margin-bottom: 1.3rem; }
+.hero__intro .hero__cta { margin-top: 1.8rem; margin-bottom: 0; }
+
+/* ---------- Headshot (large rounded square; click to expand) ---------- */
+.hero__portrait {
+  grid-area: photo;
+  position: relative;
+  margin: 0;
+  width: 100%; max-width: 400px; aspect-ratio: 1;
+}
+.hero__portrait-btn {
+  display: block; width: 100%; height: 100%; padding: 0;
+  border: 0; background: none; cursor: zoom-in;
+  border-radius: var(--radius);
+}
+.hero__portrait img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; display: block;
+  border-radius: var(--radius);
+  border: 4px solid var(--surface);
+  box-shadow: 0 0 0 1.5px var(--accent-line), var(--shadow-md);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.hero__portrait-btn:hover img,
+.hero__portrait-btn:focus-visible img {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 2px var(--accent), var(--shadow-lg);
+}
+.hero__portrait-btn:focus-visible { outline: none; }
+/* circuit-node corner accents framing the rounded square */
+.hero__portrait::before, .hero__portrait::after {
+  content: ""; position: absolute; width: 22px; height: 22px; pointer-events: none; z-index: 1;
+}
+.hero__portrait::before { top: -6px; left: -6px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); border-top-left-radius: 10px; }
+.hero__portrait::after { bottom: -6px; right: -6px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); border-bottom-right-radius: 10px; }
+/* When JS hides the figure (no photo / load error), pull it from the row so the
+   tagline sits alone full-width — flex gap only renders between visible items. */
+.hero__portrait[hidden] { display: none; }
+
+.hero__title {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+  line-height: 1.02;
+}
+.hero__role {
+  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+  font-weight: 600; color: var(--accent);
+  margin-bottom: 1.4rem;            /* space before the tagline+photo row */
+  min-height: 1.5em;
+}
+.type-cursor {
+  display: inline-block; width: 2px; height: 1.05em; vertical-align: -2px;
+  background: var(--accent); margin-left: 4px; border-radius: 1px;
+  animation: caretBlink 1.05s steps(1) infinite;
+}
+@keyframes caretBlink { 50% { opacity: 0; } }
+.hero__tagline {
+  max-width: 46ch; font-size: clamp(1rem, 1.6vw, 1.12rem);
+  color: var(--text-muted); margin: 0;   /* row spacing handled by .hero__body */
+}
+.hero__cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.6rem; }
+
+.hero__scroll {
+  position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-faint); display: flex; align-items: center; gap: 0.5rem;
+}
+.hero__scroll span { width: 1px; height: 26px; background: var(--accent-line); display: block; animation: scrollPulse 1.8s var(--ease) infinite; transform-origin: top; }
+@keyframes scrollPulse { 0%, 100% { transform: scaleY(0.4); opacity: 0.4; } 50% { transform: scaleY(1); opacity: 1; } }
+
+/* ---------- PCB traces + signal pulses ---------- */
+.hero__traces { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; }
+.trace-base use { fill: none; stroke: var(--border); stroke-width: 2; }
+.trace-nodes circle { fill: var(--accent); opacity: 0.35; }
+.trace-pulse use {
+  fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round;
+  stroke-dasharray: 24 1000; stroke-dashoffset: 1024;
+  filter: drop-shadow(0 0 5px var(--accent));
+  animation: traceFlow 5s linear infinite;
+}
+.trace-pulse use:nth-child(1) { animation-duration: 5.2s; animation-delay: 0s; }
+.trace-pulse use:nth-child(2) { animation-duration: 6.4s; animation-delay: 1.1s; }
+.trace-pulse use:nth-child(3) { animation-duration: 4.6s; animation-delay: 2.2s; }
+.trace-pulse use:nth-child(4) { animation-duration: 7.1s; animation-delay: 0.6s; }
+.trace-pulse use:nth-child(5) { animation-duration: 5.6s; animation-delay: 3s; }
+@keyframes traceFlow { from { stroke-dashoffset: 1024; } to { stroke-dashoffset: 0; } }
+
+/* Single column on narrow screens: photo, then bio + CTA. */
+@media (max-width: 860px) {
+  .hero__body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "photo"
+      "intro";
+    row-gap: 1.8rem;
+  }
+  .hero__portrait { max-width: 320px; }
+}

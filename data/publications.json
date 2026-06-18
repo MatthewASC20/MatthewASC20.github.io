@@ -1,0 +1,28 @@
+[
+  {
+    "title": "High-Frequency Characterization of Coss Loss and Dynamic RdsON in GaN",
+    "authors": [
+      "Mansi V. Joisher",
+      "Matthew De Jesus",
+      "Carlos Sanchez",
+      "David J. Perreault"
+    ],
+    "venue": "2026 IEEE Applied Power Electronics Conference and Exposition (APEC)",
+    "affiliation": "Department of Electrical Engineering and Computer Science, MIT",
+    "status": "Accepted — to appear in IEEE Xplore",
+    "year": "2026",
+    "abstract": "A comprehensive experimental characterization of dynamic on-resistance (RdsON) and output-capacitance (Coss) losses for commercial GaN devices under Class-E-type waveforms, measured at duty cycles of 25% and 50%, switching frequencies up to 30 MHz, peak voltages from 200–400 V, and case temperatures up to 80 °C.",
+    "links": [
+      {
+        "label": "Paper (PDF)",
+        "url": "assets/gan-coss-apec2026.pdf",
+        "icon": "pdf"
+      },
+      {
+        "label": "Test software",
+        "url": "https://github.com/MatthewASC20/GaN-FET-Characterisation",
+        "icon": "github"
+      }
+    ]
+  }
+]

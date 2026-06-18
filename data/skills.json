@@ -1,0 +1,56 @@
+[
+  {
+    "category": "Power & Analog",
+    "items": [
+      "Power Electronics",
+      "DC–DC / Buck Converters",
+      "GaN & MOSFET Characterization",
+      "Motor Drives",
+      "Analog / Mixed-Signal IC Design",
+      "PCB Design",
+      "Soldering"
+    ]
+  },
+  {
+    "category": "IC Design & EDA",
+    "items": [
+      "Cadence",
+      "Calibre DRC / LVS",
+      "Intel 22nm PDK",
+      "LTSpice",
+      "AutoCAD",
+      "3D Printing / CAD"
+    ]
+  },
+  {
+    "category": "Digital & Compute",
+    "items": [
+      "Verilog",
+      "Bluespec",
+      "FPGA",
+      "Computer Architecture",
+      "RISC-V",
+      "PSoC"
+    ]
+  },
+  {
+    "category": "Programming",
+    "items": [
+      "Python",
+      "C",
+      "Assembly",
+      "JavaScript",
+      "LISP (Scheme)"
+    ]
+  },
+  {
+    "category": "Lab & Automation",
+    "items": [
+      "SCPI Instrumentation",
+      "Oscilloscopes",
+      "Thermal Control",
+      "Test Automation",
+      "Reproducible Measurement"
+    ]
+  }
+]

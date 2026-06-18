@@ -1,0 +1,9 @@
+# OS / editor junk
+.DS_Store
+**/.DS_Store
+
+# Claude Code local data (not part of the site)
+.claude/
+
+# Unused full-size original backup — the live site uses the optimized assets/photo.jpg
+assets/photo-original.jpg

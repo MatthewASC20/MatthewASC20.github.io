@@ -1,0 +1,19 @@
+[
+  {
+    "title": "CryoFac",
+    "id": "cryofac",
+    "kind": "Event",
+    "role": "Organizer",
+    "org": "MIT East Campus · CPW",
+    "date": "Annual · since 2023",
+    "blurb": "A liquid-nitrogen ice-cream night I help run for MIT Campus Preview Weekend — ~50 gallons of base frozen on the spot into 15+ flavors amid clouds of nitrogen vapor.",
+    "description": [
+      "CryoFac is the liquid-nitrogen ice-cream station I help organize for MIT's Campus Preview Weekend, the spring event that welcomes newly admitted students to campus.",
+      "With other East Campus residents, we freeze roughly 50 gallons of base on the spot into 15+ flavors — from classics to black sesame and coconut green tea — while plumes of nitrogen vapor roll across the table. It's part chemistry demo, part welcome party, and a great excuse to talk to prospective students about life at MIT."
+    ],
+    "tags": ["Outreach", "Hands-on", "Community"],
+    "links": [
+      { "label": "MIT News", "url": "https://news.mit.edu/2018/be-our-guest-mit-campus-preview-weekend-0508", "icon": "arrow" }
+    ]
+  }
+]

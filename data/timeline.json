@@ -1,0 +1,107 @@
+[
+    {
+    "type": "education",
+    "role": "Master of Engineering in Electrical Engineering & Computer Science",
+    "org": "Massachusetts Institute of Technology",
+    "logo": "assets/logos/mit.svg",
+    "logoHeight": 34,
+    "location": "Cambridge, MA",
+    "start": "2026",
+    "end": "May 2027",
+    "summary": "Candidate for Master of Engineering (MEng), expected May 2027.",
+    "highlights": [
+      "Relevant coursework: Power Electronics, Semiconductors, Nanoelectronics, Digital Systems, Electrical Circuits, Microcomputers, Computation Structures, Computer Systems Engineering, Algorithms & Data Structures, Low-level Programming in C and Assembly."
+    ],
+    "tags": [
+      "Power Electronics",
+      "Semiconductors",
+      "Computer Architecture"
+    ]
+  },
+  {
+    "type": "education",
+    "role": "Bachelor of Science in Electrical Engineering & Computer Science",
+    "org": "Massachusetts Institute of Technology",
+    "logo": "assets/logos/mit.svg",
+    "logoHeight": 34,
+    "location": "Cambridge, MA",
+    "start": "2022",
+    "end": "May 2026",
+    "summary": "B.S. in Electrical Engineering & Computer Science (Course 6-2), conferred May 2026.",
+    "highlights": [
+      "Relevant coursework: Power Electronics, Semiconductors, Nanoelectronics, Digital Systems, Electrical Circuits, Microcomputers, Computation Structures, Computer Systems Engineering, Algorithms & Data Structures, Low-level Programming in C and Assembly."
+    ],
+    "tags": [
+      "Power Electronics",
+      "Circuits",
+      "Computer Science"
+    ]
+  },
+  {
+    "type": "experience",
+    "role": "Undergraduate Researcher",
+    "org": "MIT Research Laboratory of Electronics",
+    "logo": "assets/logos/rle.svg",
+    "logoHeight": 60,
+    "location": "Cambridge, MA",
+    "start": "Jun 2025",
+    "end": "Present",
+    "summary": "Characterizing loss mechanisms in 5th-generation GaN power transistors for high-frequency converters.",
+    "highlights": [
+      "Designed and iterated multiple high-frequency PCB test platforms to characterize switching loss, dynamic on-resistance, and output-capacitance (Coss) losses in 5th-generation GaN FETs.",
+      "Automated laboratory instrumentation over SCPI (power supplies, oscilloscopes, thermal control) to run voltage, frequency, and temperature sweeps for reproducible device characterization.",
+      "Co-authored a paper accepted to the 2026 IEEE Applied Power Electronics Conference (APEC), to appear in IEEE Xplore."
+    ],
+    "tags": [
+      "GaN",
+      "Power Electronics",
+      "PCB Design",
+      "SCPI",
+      "Measurement"
+    ]
+  },
+  {
+    "type": "experience",
+    "role": "Undergraduate Researcher",
+    "org": "MIT Energy Initiative",
+    "logo": "assets/logos/mitei.png",
+    "logoHeight": 34,
+    "location": "Cambridge, MA",
+    "start": "Jun 2024",
+    "end": "Aug 2024",
+    "summary": "Modeled energy arbitrage in the Texas (ERCOT) power market.",
+    "highlights": [
+      "Built a simulation to model energy arbitrage in the Texas power market, balancing runtime against estimation accuracy.",
+      "Used a pruning approach that kept only the top-N most profitable paths each hour, cutting computation while focusing on the highest-value outcomes.",
+      "Added robust input validation and error handling for user-selected parameters such as load zones and file types, and generated clear revenue and ROI summaries."
+    ],
+    "tags": [
+      "Python",
+      "Simulation",
+      "Optimization",
+      "Energy Markets"
+    ]
+  },
+  {
+    "type": "experience",
+    "role": "Intern — Employee Operations",
+    "org": "Bloomberg",
+    "logo": "assets/logos/bloomberg.svg",
+    "logoHeight": 34,
+    "location": "New York, NY",
+    "start": "Jun 2023",
+    "end": "Aug 2023",
+    "summary": "IT operations and device management across the Bloomberg network.",
+    "highlights": [
+      "Managed computers on the Bloomberg network using Active Directory, including remote installation of software.",
+      "Enrolled laptops into Microsoft Azure for seamless integration and management.",
+      "Led projects using the Agile/Scrum framework, driving team collaboration and on-time delivery."
+    ],
+    "tags": [
+      "IT Operations",
+      "Active Directory",
+      "Azure",
+      "Agile"
+    ]
+  }
+]

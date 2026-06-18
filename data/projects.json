@@ -1,0 +1,357 @@
+[
+  {
+    "id": "buck",
+    "categories": ["Power Electronics"],
+    "title": "Synchronous Buck Converter",
+    "subtitle": "6.622 Power Electronics Design Project",
+    "icon": "power",
+    "date": "2026",
+    "featured": true,
+    "blurb": "A 160 W, 12 V synchronous buck whose component values were chosen by a Python optimizer sweeping MOSFETs, magnetics, and capacitors for maximum efficiency.",
+    "description": [
+      "Designed a synchronous buck converter (40 V → 12 V, 160 W) for a solar-car-style application where efficiency matters and cost does not. A Python script swept all 16 high-side/low-side MOSFET pairings plus magnetics and capacitor banks against a full loss model to find the most efficient design.",
+      "The optimized design reaches 97.8% worst-case efficiency — efficient enough that the MOSFETs dissipate little enough power to run with no heatsink. Closed-loop transient behavior was verified with an averaged LTSpice model and a PI compensator."
+    ],
+    "metrics": [
+      {
+        "label": "Efficiency",
+        "value": "97.81%"
+      },
+      {
+        "label": "Switching freq.",
+        "value": "100 kHz"
+      },
+      {
+        "label": "Output",
+        "value": "12 V / 160 W"
+      },
+      {
+        "label": "Junction temp.",
+        "value": "139 °C"
+      }
+    ],
+    "highlights": [
+      "Python design sweep over 16 MOSFET pairs, RM-core magnetics, and capacitor banks against conduction, switching, gate-drive, Coss, and reverse-recovery loss models.",
+      "Synchronous rectification chosen over a Schottky diode, saving ~4.9 W of low-side loss.",
+      "Averaged LTSpice model with an LT1001 PI compensator validating ±120 W load transients.",
+      "Inductor sized for 0.267 T peak flux (1.12× saturation margin) with full thermal analysis."
+    ],
+    "tags": [
+      "Power Electronics",
+      "Python",
+      "LTSpice",
+      "Magnetics"
+    ],
+    "links": [
+      {
+        "label": "Final Report (PDF)",
+        "url": "assets/buck-converter-report.pdf",
+        "icon": "pdf"
+      }
+    ]
+  },
+  {
+    "id": "gan",
+    "categories": ["Power Electronics"],
+    "title": "High-Frequency GaN Characterization",
+    "subtitle": "MIT RLE · IEEE APEC 2026",
+    "icon": "wave",
+    "date": "2025–2026",
+    "featured": true,
+    "blurb": "Measurement method and comprehensive data for Coss loss and dynamic RdsON in commercial GaN devices at switching frequencies up to 30 MHz.",
+    "description": [
+      "Adapted a resonant, Class-E-style measurement circuit to extract both output-capacitance (Coss) loss and dynamic on-resistance in commercial 650 V GaN devices at frequencies up to 30 MHz — a regime where conventional loss estimation breaks down.",
+      "A three-configuration power-difference method separates Coss and conduction losses by keeping circulating current constant across tests. I built an automated SCPI test platform that tunes for zero-voltage switching, logs data to the cloud, and tracks operating points across 162 test runs per device."
+    ],
+    "metrics": [
+      {
+        "label": "Frequency",
+        "value": "up to 30 MHz"
+      },
+      {
+        "label": "Peak voltage",
+        "value": "200–400 V"
+      },
+      {
+        "label": "Devices",
+        "value": "5+ commercial GaN"
+      },
+      {
+        "label": "Test runs / device",
+        "value": "162"
+      }
+    ],
+    "highlights": [
+      "Co-authored paper accepted to the 2026 IEEE Applied Power Electronics Conference (APEC); to appear in IEEE Xplore.",
+      "Custom high-frequency boards on Rogers 4350B with copper-tube and single-turn foil resonant inductors.",
+      "SCPI automation that locates the ZVS minimum-input-power point and logs voltage, frequency, and current per run.",
+      "Established intra-family Coss scaling trends and temperature dependence across manufacturers."
+    ],
+    "tags": [
+      "GaN",
+      "Power Electronics",
+      "Measurement",
+      "Python",
+      "SCPI"
+    ],
+    "links": [
+      {
+        "label": "Paper (PDF)",
+        "url": "assets/gan-coss-apec2026.pdf",
+        "icon": "pdf"
+      },
+      {
+        "label": "Test software (GitHub)",
+        "url": "https://github.com/MatthewASC20/GaN-FET-Characterisation",
+        "icon": "github"
+      }
+    ]
+  },
+  {
+    "id": "diffamp",
+    "categories": ["IC Design"],
+    "title": "Differential Amplifier IC",
+    "subtitle": "Fabricated by Intel · 22nm",
+    "icon": "chip",
+    "date": "2025",
+    "featured": true,
+    "blurb": "A CMOS differential amplifier designed, laid out, and verified in Intel's 22nm PDK, then integrated into a shared-bus IC and submitted DRC/LVS-clean.",
+    "description": [
+      "Designed a CMOS differential amplifier in the Intel 22nm PDK, tuning transistor sizing and biasing to maximize a gain/swing/power figure of merit. Verified gain, output swing, power, and node voltages in Cadence.",
+      "Also implemented the supporting cells — inverter, pass gate, and a digital code checker — for integration into a shared-bus IC architecture, and delivered a full-system layout that passed DRC and LVS cleanly. The design was fabricated by Intel."
+    ],
+    "metrics": [
+      {
+        "label": "Gain",
+        "value": "80 dB"
+      },
+      {
+        "label": "Power",
+        "value": "1 mW"
+      },
+      {
+        "label": "Swing",
+        "value": "200 mV"
+      },
+      {
+        "label": "Process",
+        "value": "Intel 22nm"
+      }
+    ],
+    "highlights": [
+      "Full custom flow in Cadence: schematic, layout, and verification.",
+      "Inverter, pass gate, and digital code checker implemented for shared-bus integration.",
+      "DRC/LVS-clean submission of both individual cells and the full system.",
+      "Fabricated on real silicon by Intel."
+    ],
+    "tags": [
+      "Analog IC",
+      "CMOS",
+      "Cadence",
+      "Layout"
+    ],
+    "links": [
+      {
+        "label": "Design Report (PDF)",
+        "url": "assets/diff-amp-ic.pdf",
+        "icon": "pdf"
+      }
+    ]
+  },
+  {
+    "id": "riscv",
+    "categories": ["FPGA & Digital"],
+    "title": "32-bit RISC-V Processor",
+    "subtitle": "5-stage pipelined CPU",
+    "icon": "cpu",
+    "date": "2023",
+    "featured": false,
+    "blurb": "A 32-bit, 5-stage pipelined RISC-V processor with caching, branch prediction, and full bypassing.",
+    "description": [
+      "Designed and implemented a 32-bit RISC-V 5-stage pipelined processor with a 600 ns critical path. Integrated a 32-bit direct-mapped cache and a 2-way set-associative cache to improve memory performance.",
+      "Optimized throughput with branch prediction and full bypassing from the writeback and execute stages to resolve data hazards without stalling."
+    ],
+    "metrics": [
+      {
+        "label": "ISA",
+        "value": "RISC-V 32"
+      },
+      {
+        "label": "Pipeline",
+        "value": "5-stage"
+      },
+      {
+        "label": "Critical path",
+        "value": "600 ns"
+      }
+    ],
+    "highlights": [
+      "Direct-mapped and 2-way set-associative caches.",
+      "Branch prediction to reduce control-hazard penalties.",
+      "Full bypassing from writeback and execute stages."
+    ],
+    "tags": [
+      "Verilog",
+      "Bluespec",
+      "Computer Architecture",
+      "FPGA"
+    ],
+    "links": []
+  },
+  {
+    "id": "gokart",
+    "categories": ["Power Electronics"],
+    "title": "Go-Kart Motor Drive",
+    "subtitle": "PWM H-bridge power stage",
+    "icon": "motor",
+    "date": "2024",
+    "featured": false,
+    "blurb": "A discrete PWM motor drive built from a 555 timer and comparator, driving a 1.5 HP motor at 36 V / 30 A.",
+    "description": [
+      "Built a PWM signal generator with adjustable duty cycle and frequency using a 555 timer and an LM311 comparator, then added delay circuitry to safely drive two N-channel MOSFETs in a totem-pole configuration.",
+      "The drive handled 36 V and 30 A, successfully running a 1.5 HP go-kart motor — a hands-on exercise in component selection, cost, and high-power switching."
+    ],
+    "metrics": [
+      {
+        "label": "Voltage",
+        "value": "36 V"
+      },
+      {
+        "label": "Current",
+        "value": "30 A"
+      },
+      {
+        "label": "Motor",
+        "value": "1.5 HP"
+      }
+    ],
+    "highlights": [
+      "Adjustable-duty PWM from a 555 timer + LM311 comparator.",
+      "Dead-time / delay circuitry for safe totem-pole switching.",
+      "Discrete N-channel MOSFET power stage."
+    ],
+    "tags": [
+      "Power Electronics",
+      "PWM",
+      "Motor Control",
+      "Analog"
+    ],
+    "links": []
+  },
+  {
+    "id": "shade",
+    "categories": ["Embedded Systems", "Power Electronics"],
+    "title": "Motorized Window Shade",
+    "subtitle": "6.1311 Independent Inquiry",
+    "icon": "embedded",
+    "date": "2024",
+    "featured": false,
+    "blurb": "A battery-powered, wirelessly controlled skylight shade with custom buck converters, an H-bridge, and 3D-printed gear trains.",
+    "description": [
+      "Designed a battery-powered motorized shade for an inaccessible, slanted skylight. The system runs from two series 9 V batteries (14.4–19.2 V) and uses an ESP32-C3 for wireless control, an H-bridge motor drive with IR2125 gate drivers, and two feedback buck converters (18 V → 5 V and 18 V → 12 V).",
+      "Added a comparator + Zener low-voltage protection circuit and 10-turn potentiometer position feedback. For the mechanical side I learned CAD and 3D-printed 60:1 and 125:1 gear trains to couple the motor to the roller and the position sensor."
+    ],
+    "metrics": [
+      {
+        "label": "Control",
+        "value": "ESP32-C3"
+      },
+      {
+        "label": "Rails",
+        "value": "5 V & 12 V bucks"
+      },
+      {
+        "label": "Gearing",
+        "value": "60:1 / 125:1"
+      }
+    ],
+    "highlights": [
+      "Two feedback-regulated buck converters plus low-voltage protection.",
+      "H-bridge motor drive with IR2125 high/low-side gate drivers.",
+      "Self-taught CAD and 3D-printed gear trains and couplings."
+    ],
+    "tags": [
+      "Embedded",
+      "Power Electronics",
+      "ESP32",
+      "CAD"
+    ],
+    "links": []
+  },
+  {
+    "id": "ytdl",
+    "categories": ["Software & ML"],
+    "title": "YouTube / Panopto Downloader",
+    "subtitle": "Chrome extension + local server",
+    "icon": "code",
+    "date": "2026",
+    "featured": false,
+    "blurb": "A Chrome extension and Flask server that downloads and composites multi-stream lecture and YouTube videos with ffmpeg.",
+    "description": [
+      "Built a Chrome extension backed by a local Flask server to download YouTube and Panopto videos. For Panopto lectures it detects multiple camera/slide streams and offers picture-in-picture, side-by-side, or single-stream modes.",
+      "PiP and side-by-side modes download each stream separately and composite them with ffmpeg automatically. The server caches browser cookies and exposes a system-check panel for yt-dlp, ffmpeg, and the JS runtime dependencies."
+    ],
+    "metrics": [
+      {
+        "label": "Stack",
+        "value": "Flask + JS"
+      },
+      {
+        "label": "Media",
+        "value": "yt-dlp / ffmpeg"
+      }
+    ],
+    "highlights": [
+      "Multi-stream Panopto detection with PiP and side-by-side compositing.",
+      "Flask server with cookie caching and a dependency system-check panel.",
+      "Download button injected directly into the YouTube UI."
+    ],
+    "tags": [
+      "Python",
+      "Flask",
+      "Chrome Extension",
+      "ffmpeg"
+    ],
+    "links": []
+  },
+  {
+    "id": "botnet",
+    "categories": ["Software & ML"],
+    "title": "YouTube Botnet Detection",
+    "subtitle": "Coordination-detection pipeline",
+    "icon": "code",
+    "date": "2025",
+    "featured": false,
+    "blurb": "An educational toolkit that extracts 80+ behavioral, text, temporal, and network features from YouTube comments to detect coordinated botnets.",
+    "description": [
+      "Built a research pipeline that collects YouTube comments via the Data API and extracts 80+ temporal, text/NLP, network, behavioral, and semantic features. Two detection paths are available: a semantic + temporal coordination detector (BotBuster) and a feature-based HDBSCAN/DBSCAN clustering ensemble.",
+      "The system stores data in SQLite, produces Plotly/Matplotlib HTML reports, and ships a Flask API that powers a companion Chrome extension and batch analysis endpoint."
+    ],
+    "metrics": [
+      {
+        "label": "Features",
+        "value": "80+"
+      },
+      {
+        "label": "Detectors",
+        "value": "2 paths"
+      },
+      {
+        "label": "Stack",
+        "value": "Python + Flask"
+      }
+    ],
+    "highlights": [
+      "Temporal, text, network co-occurrence, behavioral, and semantic feature extractors.",
+      "Coordination-graph clustering plus an HDBSCAN/DBSCAN ensemble.",
+      "SQLite storage, HTML visual reports, and a Flask API for the extension."
+    ],
+    "tags": [
+      "Python",
+      "Machine Learning",
+      "NLP",
+      "Flask"
+    ],
+    "links": []
+  }
+]

@@ -1,0 +1,27 @@
+/* ---------- Beyond the Lab (non-academic, image-forward cards) ----------
+   The cover photo itself is the shared `.card-cover` component (css/components/cards.css). */
+.beyond { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.4rem; }
+
+.beyond-card {
+  display: flex; flex-direction: column; overflow: hidden; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.28s var(--ease), border-color 0.28s, box-shadow 0.28s;
+}
+.beyond-card:hover { transform: translateY(-5px); border-color: var(--accent-line); box-shadow: var(--shadow-lg); }
+.beyond-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Body */
+.beyond-card__body { display: flex; flex-direction: column; flex: 1; padding: 1.3rem 1.4rem; }
+.beyond-card__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.55rem; }
+.beyond-card__kind {
+  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.15rem 0.5rem; border-radius: 5px;
+  border: 1px solid var(--accent-line); color: var(--accent); background: var(--accent-soft);
+}
+.beyond-card__role { font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-muted); }
+.beyond-card__date { font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-faint); margin-left: auto; }
+.beyond-card__title { font-size: 1.24rem; font-weight: 700; margin-bottom: 0.4rem; }
+.beyond-card__blurb { color: var(--text-muted); font-size: 0.96rem; margin-bottom: 1rem; }
+.beyond-card__body .tags { margin-bottom: 1rem; }
+.beyond-card__links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }

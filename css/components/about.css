@@ -1,0 +1,3 @@
+/* ---------- About bio paragraphs (rendered inside the combined hero intro) ---------- */
+.about__body p { color: var(--text-muted); font-size: 1.06rem; margin-bottom: 1.2rem; max-width: 60ch; }
+.about__body p:last-child { margin-bottom: 0; }

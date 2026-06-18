@@ -1,0 +1,47 @@
+/* ---------- Photo lightbox (full-size image overlay) ---------- */
+.lightbox { position: fixed; inset: 0; z-index: 250; display: none; }
+.lightbox.is-open { display: grid; place-items: center; padding: clamp(1rem, 5vw, 3rem); }
+
+.lightbox__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(8, 14, 18, 0.82); backdrop-filter: blur(6px);
+  animation: fade 0.25s var(--ease);   /* fade/pop defined in modal.css */
+}
+.lightbox__img {
+  position: relative; z-index: 1;
+  max-width: 94vw; max-height: 92vh; width: auto; height: auto;
+  object-fit: contain;
+  border-radius: var(--radius);
+  border: 4px solid var(--surface);
+  box-shadow: var(--shadow-lg);
+  animation: pop 0.3s var(--ease);
+}
+.lightbox__close {
+  position: absolute; z-index: 2;
+  top: clamp(0.8rem, 2vw, 1.4rem); right: clamp(0.8rem, 2vw, 1.4rem);
+  width: 44px; height: 44px; border-radius: 50%; font-size: 1.6rem; line-height: 1;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
+  cursor: pointer; transition: color 0.2s, border-color 0.2s;
+}
+.lightbox__close:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Gallery navigation — only shown when viewing multiple photos (.is-gallery). */
+.lightbox__nav { display: none; }
+.lightbox.is-gallery .lightbox__nav {
+  position: absolute; z-index: 2; top: 50%; transform: translateY(-50%);
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 50%; font-size: 1.9rem; line-height: 1; padding-bottom: 4px;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
+  cursor: pointer; transition: color 0.2s, border-color 0.2s;
+}
+.lightbox.is-gallery .lightbox__nav:hover { color: var(--accent); border-color: var(--accent); }
+.lightbox__nav--prev { left: clamp(0.8rem, 3vw, 2rem); }
+.lightbox__nav--next { right: clamp(0.8rem, 3vw, 2rem); }
+
+.lightbox__counter { display: none; }
+.lightbox.is-gallery .lightbox__counter {
+  position: absolute; z-index: 2; left: 50%; bottom: clamp(0.8rem, 3vh, 1.6rem); transform: translateX(-50%);
+  display: block; font-family: var(--font-mono); font-size: 0.8rem; color: #fff;
+  background: rgba(8, 14, 18, 0.6); border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.3rem 0.7rem; border-radius: 999px;
+}

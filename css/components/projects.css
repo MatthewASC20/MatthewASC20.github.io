@@ -1,0 +1,43 @@
+/* ---------- Projects ---------- */
+/* minmax(min(100%, 300px), …) keeps cards from overflowing on phones < 340px wide */
+.projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.4rem; }
+.project-card {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.5rem; box-shadow: var(--shadow-sm); cursor: pointer; overflow: hidden;
+  transition: transform 0.28s var(--ease), border-color 0.28s, box-shadow 0.28s;
+}
+.project-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(120% 120% at 100% 0%, var(--accent-soft), transparent 55%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.project-card:hover { transform: translateY(-5px); border-color: var(--accent-line); box-shadow: var(--shadow-lg); }
+.project-card:hover::after { opacity: 1; }
+.project-card.is-featured { grid-column: span 2; }
+/* full-bleed cover photo at the top of the card (breaks out of the card padding) */
+.project-card > .card-cover { margin: -1.5rem -1.5rem 1.3rem; border-radius: var(--radius) var(--radius) 0 0; }
+.project-card.is-featured::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-line), transparent);
+}
+
+.pc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.pc-icon {
+  width: 46px; height: 46px; border-radius: 11px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-line);
+}
+.pc-date { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-faint); }
+.pc-title { font-size: 1.28rem; font-weight: 700; margin-bottom: 0.15rem; }
+.pc-sub { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); margin-bottom: 0.75rem; }
+.pc-blurb { color: var(--text-muted); font-size: 0.96rem; margin-bottom: 1.1rem; flex: 1; }
+
+.pc-metrics { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 1.1rem; }
+.pc-metric .m-val { font-size: 1.18rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+.pc-metric .m-lab { display: block; font-size: 0.74rem; color: var(--text-faint); }
+.pc-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: auto; }
+.pc-more { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); display: inline-flex; align-items: center; gap: 0.35rem; }
+.pc-more svg { transition: transform 0.2s; }
+.project-card:hover .pc-more svg { transform: translateX(3px); }
+
+@media (max-width: 900px) { .project-card.is-featured { grid-column: span 1; } }

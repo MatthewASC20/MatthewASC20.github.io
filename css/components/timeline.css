@@ -1,0 +1,48 @@
+/* ---------- Timeline ---------- */
+.timeline { position: relative; margin-left: 6px; }
+.timeline::before {
+  content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px;
+  background: linear-gradient(var(--accent-line), var(--border) 70%);
+}
+.tl-item { position: relative; padding: 0 0 2.2rem 2.2rem; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before {
+  content: ""; position: absolute; left: -5px; top: 6px; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--surface); border: 2px solid var(--accent);
+  box-shadow: 0 0 0 4px var(--bg);
+  transition: box-shadow 0.25s;
+}
+.tl-item:hover::before { box-shadow: 0 0 0 4px var(--bg), 0 0 12px 2px var(--accent-line); }
+.tl-item[data-type="education"]::before { border-color: var(--copper); }
+.tl-card {
+  position: relative;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 1.4rem 1.6rem; box-shadow: var(--shadow-sm);
+  transition: border-color 0.25s, transform 0.25s var(--ease), box-shadow 0.25s;
+}
+.tl-card:hover { border-color: var(--accent-line); transform: translateX(4px); box-shadow: var(--shadow-md); }
+/* company logo placed directly in the top-right blank space (no chip/border).
+   Fixed height + auto width handles both square marks (MIT) and wide wordmarks (Bloomberg). */
+.tl-logo {
+  position: absolute; top: 1.3rem; right: 1.4rem;
+  height: var(--tl-logo-h, 34px); width: auto; max-width: var(--tl-logo-maxw, 130px); object-fit: contain;
+}
+/* Bloomberg's wordmark is solid black — invert it to white on the dark theme so it stays visible. */
+[data-theme="dark"] .tl-logo[src*="bloomberg"] { filter: invert(1); }
+.tl-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem; padding-right: 8rem; }
+.tl-role { padding-right: 8rem; }
+.tl-date { font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent); white-space: nowrap; }
+.tl-type {
+  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.15rem 0.5rem; border-radius: 5px; border: 1px solid var(--border); color: var(--text-faint);
+}
+.tl-role { font-size: 1.16rem; font-weight: 700; }
+.tl-org { color: var(--accent); font-weight: 600; font-size: 0.96rem; }
+.tl-loc { color: var(--text-faint); font-size: 0.85rem; }
+.tl-summary { color: var(--text-muted); margin: 0.5rem 0 0.7rem; }
+.tl-highlights { display: grid; gap: 0.45rem; margin-bottom: 0.9rem; }
+.tl-highlights li { position: relative; padding-left: 1.3rem; color: var(--text-muted); font-size: 0.94rem; }
+.tl-highlights li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 7px;
+  border: 1.5px solid var(--accent); border-bottom: none; border-left: none; transform: rotate(45deg);
+}
