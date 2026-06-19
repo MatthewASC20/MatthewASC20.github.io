@@ -5,6 +5,7 @@
 import { $, esc } from "../lib/dom.js";
 import { svg, linkIcon } from "../lib/icons.js";
 import { openLightbox } from "./lightbox.js";
+import { mediaEl } from "../lib/photos.js";
 
 let lastFocused = null;
 let photos = [];
@@ -16,7 +17,7 @@ function carouselMarkup(list) {
   return `
     <div class="modal__carousel">
       <div class="modal__carousel-stage">
-        <img class="modal__carousel-img" alt="">
+        <div class="modal__carousel-media"></div>
         ${multi ? `
         <button class="modal__carousel-nav prev" type="button" aria-label="Previous photo">&#8249;</button>
         <button class="modal__carousel-nav next" type="button" aria-label="Next photo">&#8250;</button>
@@ -28,8 +29,8 @@ function carouselMarkup(list) {
 function renderPhoto() {
   const root = $("#modalContent .modal__carousel");
   if (!root || !photos.length) return;
-  const img = $(".modal__carousel-img", root);
-  if (img) { img.src = photos[index]; img.alt = ""; }
+  const media = $(".modal__carousel-media", root);
+  if (media) media.innerHTML = mediaEl(photos[index], { className: "modal__carousel-item" });
   const counter = $(".modal__carousel-counter", root);
   if (counter) counter.textContent = `${index + 1} / ${photos.length}`;
 }
@@ -46,8 +47,6 @@ function openModal(contentHTML, photoSrcs) {
   photos = photoSrcs ?? [];
   index = 0;
   $("#modalContent").innerHTML = `${carouselMarkup(photos)}${contentHTML}`;
-  const carImg = $("#modalContent .modal__carousel-img");
-  if (carImg) carImg.addEventListener("error", () => carImg.remove());
   renderPhoto();
 
   const modal = $("#projectModal");
@@ -118,7 +117,7 @@ export function initModal() {
     const nav = e.target.closest(".modal__carousel-nav");
     if (nav) { step(nav.classList.contains("prev") ? -1 : 1); return; }
     // click a photo → open it in the fullscreen, max-size carousel at the same index
-    if (e.target.closest(".modal__carousel-img") && photos.length) openLightbox(photos, index, "");
+    if (e.target.closest(".modal__carousel-media") && photos.length) openLightbox(photos, index, "");
   });
   document.addEventListener("keydown", (e) => {
     if (!$("#projectModal").classList.contains("is-open")) return;

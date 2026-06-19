@@ -1,20 +1,22 @@
-/* Image lightbox / gallery.
+/* Fullscreen media viewer / gallery (images and videos).
    - Single image: any [data-lightbox] element (e.g. the hero portrait).
-   - Gallery: call openLightbox(images, startIndex) — shows ‹ › arrows + a counter,
+   - Gallery: call openLightbox(items, startIndex) — shows ‹ › arrows + a counter,
      navigable with the arrows or the ← / → keys.
    Close via backdrop / × / Esc. Mirrors the project modal's open/close pattern. */
 
 import { $ } from "../lib/dom.js";
+import { mediaEl } from "../lib/photos.js";
 
-let box, imgEl, counterEl;
+let box, mediaWrap, counterEl;
 let gallery = [];
 let index = 0;
+let alt = "";
 let lastFocused = null;
 
 export function initLightbox() {
   box = $("#heroLightbox");
   if (!box) return;
-  imgEl = $("#lightboxImg");
+  mediaWrap = $("#lightboxMedia");
   counterEl = $("#lightboxCounter");
 
   document.addEventListener("click", (e) => {
@@ -32,12 +34,12 @@ export function initLightbox() {
   });
 }
 
-/** Open one or more images full-size. images: array of src strings. */
-export function openLightbox(images, startIndex = 0, alt = "", trigger = null) {
-  gallery = (images ?? []).filter(Boolean);
+/** Open one or more media items full-size. items: array of src strings (images or videos). */
+export function openLightbox(items, startIndex = 0, altText = "", trigger = null) {
+  gallery = (items ?? []).filter(Boolean);
   if (!gallery.length || !box) return;
+  alt = altText;
   lastFocused = trigger ?? document.activeElement;
-  imgEl.alt = alt;
   box.classList.add("is-open");
   box.classList.toggle("is-gallery", gallery.length > 1);
   box.setAttribute("aria-hidden", "false");
@@ -54,7 +56,7 @@ function openFromTrigger(trigger) {
 
 function show(i) {
   index = ((i % gallery.length) + gallery.length) % gallery.length;
-  imgEl.src = gallery[index];
+  if (mediaWrap) mediaWrap.innerHTML = mediaEl(gallery[index], { className: "lightbox__media-el", alt, fullscreen: true });
   if (counterEl) counterEl.textContent = gallery.length > 1 ? `${index + 1} / ${gallery.length}` : "";
 }
 
@@ -67,7 +69,7 @@ function close() {
   box.setAttribute("aria-hidden", "true");
   // keep scroll locked if a project/Beyond modal is still open behind the viewer
   document.body.style.overflow = $("#projectModal")?.classList.contains("is-open") ? "hidden" : "";
-  imgEl.removeAttribute("src");
+  if (mediaWrap) mediaWrap.innerHTML = "";   // also stops any playing video
   gallery = [];
   lastFocused?.focus?.();
 }

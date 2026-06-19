@@ -10,7 +10,7 @@
       "Embedded Systems Engineer",
       "Hardware Engineer"
     ],
-    "tagline": "MIT MEng candidate designing high-efficiency power converters, characterizing GaN devices, and building hardware from the transistor up.",
+    "tagline": "MIT MEng candidate in EECS, background in power electronics, analog IC design, and embedded systems.",
     "location": "Cambridge, MA",
     "photo": "assets/photo.jpg",
     "available": "Open to full-time & internship opportunities",
@@ -21,8 +21,8 @@
       "resume": "assets/Matthew_De_Jesus_Resume.pdf"
     },
     "about": [
-      "I'm a Master of Engineering candidate at MIT working in the Research Laboratory of Electronics, where I design high-frequency PCB test platforms and characterize loss mechanisms in next-generation GaN power transistors. My work spans the full hardware stack — from custom resonant test boards and SCPI-automated instrumentation to the loss models that turn raw measurements into design insight.",
-      "I like problems where physics, circuits, and software meet. That has meant optimizing a synchronous buck converter to 97.8% efficiency with a Python design sweep, taping out a CMOS amplifier in Intel's 22nm process, pipelining a RISC-V CPU, and writing automation that makes lab measurements reproducible. I care about designs that are efficient, well-characterized, and actually buildable."
+      "Master of Engineering candidate at MIT previously working in the Research Laboratory of Electronics, where I designed high-frequency PCB test platforms to characterize loss mechanisms in next-generation GaN power transistors. My work spans the full hardware stack, analog integrated circuit design to embedded software.",
+      "I like building solutions to problems where physics, circuits, and software meet. It's resulted in a Python design sweep optimizing a synchronous buck converter to 97.8% efficiency, taping out a CMOS amplifier in Intel's 22nm process, pipelining a RISC-V CPU, and creating a custom dashboard for lab measurements. I care about hands-on work, learning by doing, and building things that work in the real world."
     ]
   }
 }

@@ -7,3 +7,10 @@
 
 # Unused full-size original backup — the live site uses the optimized assets/photo.jpg
 assets/photo-original.jpg
+
+# Source video clips (large originals) — the optimized .mp4s in the photo folders ARE committed
+*.mov
+*.MOV
+
+# Personal scratch notes (not part of the site)
+notes to add.md

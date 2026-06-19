@@ -7,7 +7,8 @@
   background: rgba(8, 14, 18, 0.82); backdrop-filter: blur(6px);
   animation: fade 0.25s var(--ease);   /* fade/pop defined in modal.css */
 }
-.lightbox__img {
+.lightbox__media { display: contents; }
+.lightbox__media-el {
   position: relative; z-index: 1;
   max-width: 94vw; max-height: 92vh; width: auto; height: auto;
   object-fit: contain;

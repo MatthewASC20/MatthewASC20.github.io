@@ -9,7 +9,7 @@
     "featured": true,
     "blurb": "A 160 W, 12 V synchronous buck whose component values were chosen by a Python optimizer sweeping MOSFETs, magnetics, and capacitors for maximum efficiency.",
     "description": [
-      "Designed a synchronous buck converter (40 V → 12 V, 160 W) for a solar-car-style application where efficiency matters and cost does not. A Python script swept all 16 high-side/low-side MOSFET pairings plus magnetics and capacitor banks against a full loss model to find the most efficient design.",
+      "Designed a synchronous buck converter (40 V → 12 V, 160 W) for a solar-car-style application where efficiency matters and cost does not. Given a list of components, a Python script swept all 16 high-side/low-side MOSFET pairings plus magnetics and capacitor banks against a full loss model to find the most efficient design.",
       "The optimized design reaches 97.8% worst-case efficiency — efficient enough that the MOSFETs dissipate little enough power to run with no heatsink. Closed-loop transient behavior was verified with an averaged LTSpice model and a PI compensator."
     ],
     "metrics": [

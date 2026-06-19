@@ -39,6 +39,28 @@
   },
   {
     "type": "experience",
+    "role": "GaN Characterization Intern",
+    "org": "Power Integrations",
+    "logo": "assets/logos/power.svg",
+    "location": "San Jose, CA",
+    "start": "Jun 2026",
+    "end": "Aug 2026",
+    "summary": "Characterizing next-generation GaN power devices for reliability and high-frequency loss.",
+    "highlights": [
+      "Assessing GaN device reliability through Time-Dependent Dielectric Breakdown (TDDB) testing.",
+      "Comparing converter operation in discontinuous- versus continuous-conduction modes (DCM vs. CCM).",
+      "Characterizing dynamic on-resistance (RDS(on)) and output-capacitance (Coss) losses at high switching frequency."
+    ],
+    "tags": [
+      "GaN",
+      "Device Characterization",
+      "Reliability",
+      "Power Electronics",
+      "TDDB"
+    ]
+  },
+  {
+    "type": "experience",
     "role": "Undergraduate Researcher",
     "org": "MIT Research Laboratory of Electronics",
     "logo": "assets/logos/rle.svg",
