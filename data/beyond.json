@@ -15,5 +15,40 @@
     "links": [
       { "label": "MIT News", "url": "https://news.mit.edu/2018/be-our-guest-mit-campus-preview-weekend-0508", "icon": "arrow" }
     ]
+  },
+  {
+    "id": "welding",
+    "kind": "Maker",
+    "title": "Welding",
+    "blurb": "Learned to weld and fabricated a steel-and-glass lantern from scratch in the shop.",
+    "tags": ["Welding", "Fabrication", "Hands-on"]
+  },
+  {
+    "id": "stainedglass",
+    "kind": "Art",
+    "title": "Stained Glass",
+    "blurb": "Cut, copper-foiled, and soldered stained-glass suncatchers by hand — including this butterfly.",
+    "tags": ["Stained Glass", "Soldering", "Art"]
+  },
+  {
+    "id": "repair",
+    "kind": "Tinkering",
+    "title": "Electronics Repair",
+    "blurb": "Fixing and restoring electronics — like rebuilding a pair of over-ear headphones with fresh pads and a new headband.",
+    "tags": ["Repair", "Electronics", "Hands-on"]
+  },
+  {
+    "id": "mining",
+    "kind": "Hardware",
+    "title": "Home Mining Rig",
+    "blurb": "Built and ran a home crypto-mining setup — ASIC and GPU miners with power and thermal management.",
+    "tags": ["Hardware", "GPUs", "Power"]
+  },
+  {
+    "id": "pharossummer",
+    "kind": "Builds",
+    "title": "Custom PC Builds",
+    "blurb": "Spent a summer assembling and photographing high-performance custom PCs — liquid-cooled, RTX-powered builds.",
+    "tags": ["PC Building", "Hardware"]
   }
 ]

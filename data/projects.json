@@ -353,5 +353,53 @@
       "Flask"
     ],
     "links": []
+  },
+  {
+    "id": "snake",
+    "categories": ["FPGA & Digital"],
+    "title": "Multiplayer Snake on FPGA",
+    "subtitle": "Two-FPGA client/host game",
+    "icon": "cpu",
+    "date": "2024",
+    "featured": false,
+    "blurb": "A multiplayer Snake game built in Verilog on FPGAs — a client/host split with HDMI video out, a hardware math accelerator, and joystick control.",
+    "description": [
+      "Designed a multiplayer Snake game in Verilog on RealDigital Urbana FPGA boards, split into a host and client that communicate over a bus. The host runs the game loop — polling joystick inputs, advancing each player's snake, and enforcing the rules — while the client renders the playfield.",
+      "Snake and apple positions live in on-chip and external memory; rendering streams from a frame buffer through TMDS encoders to an HDMI display, and a hardware math accelerator handles per-player head and tail movement."
+    ],
+    "tags": ["Verilog", "FPGA", "Digital Design", "HDMI"],
+    "links": []
+  },
+  {
+    "id": "brushlessmotor",
+    "categories": ["Power Electronics"],
+    "title": "Hand-Wound Brushless Motor",
+    "subtitle": "From-scratch motor build",
+    "icon": "motor",
+    "date": "2024",
+    "featured": false,
+    "blurb": "A brushless motor built from scratch — hand-wound copper coils on 3D-printed mounts spinning a magnet rotor under electronic commutation.",
+    "description": [
+      "Built a brushless motor by hand: wound copper coils onto 3D-printed mounts arranged around a central magnet rotor on an acrylic base, then energized the coils in sequence with a microcontroller to spin it up.",
+      "A hands-on exercise in electromagnetics, coil winding, and commutation timing."
+    ],
+    "tags": ["Motors", "Power Electronics", "3D Printing", "Microcontroller"],
+    "links": []
+  },
+  {
+    "id": "inductionmotor",
+    "categories": ["Power Electronics"],
+    "title": "Induction Motor Build",
+    "subtitle": "Hand-built rotor & frame",
+    "icon": "motor",
+    "date": "2024",
+    "featured": false,
+    "blurb": "A hand-built induction motor — wound coils mounted in a custom frame and spun up under power as a working demo.",
+    "description": [
+      "Built an induction motor largely from scratch, mounting hand-wound coils and a rotor in a custom frame and powering it up to spin as a demonstration.",
+      "A hands-on study of rotating magnetic fields and electromechanical energy conversion."
+    ],
+    "tags": ["Motors", "Power Electronics", "Electromagnetics"],
+    "links": []
   }
 ]
