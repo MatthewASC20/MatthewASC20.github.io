@@ -10,7 +10,7 @@
     "blurb": "A 160 W, 12 V synchronous buck whose component values were chosen by a Python optimizer sweeping MOSFETs, magnetics, and capacitors for maximum efficiency.",
     "description": [
       "Designed a synchronous buck converter (40 V → 12 V, 160 W) for a solar-car-style application where efficiency matters and cost does not. Given a list of components, a Python script swept all 16 high-side/low-side MOSFET pairings plus magnetics and capacitor banks against a full loss model to find the most efficient design.",
-      "The optimized design reaches 97.8% worst-case efficiency — efficient enough that the MOSFETs dissipate little enough power to run with no heatsink. Closed-loop transient behavior was verified with an averaged LTSpice model and a PI compensator."
+      "The optimized design reaches 97.8% worst-case efficiency — efficient enough that the MOSFETs dissipate little enough power to run without a heatsink. Closed-loop transient behavior was verified with an averaged LTSpice model and a PI compensator."
     ],
     "metrics": [
       {
@@ -139,7 +139,7 @@
       }
     ],
     "highlights": [
-      "Full custom flow in Cadence: schematic, layout, and verification.",
+      "Full design in Cadence: schematic, layout, and verification.",
       "Inverter, pass gate, and digital code checker implemented for shared-bus integration.",
       "DRC/LVS-clean submission of both individual cells and the full system.",
       "Fabricated on real silicon by Intel."
@@ -249,7 +249,7 @@
     "blurb": "A battery-powered, wirelessly controlled skylight shade with custom buck converters, an H-bridge, and 3D-printed gear trains.",
     "description": [
       "Designed a battery-powered motorized shade for an inaccessible, slanted skylight. The system runs from two series 9 V batteries (14.4–19.2 V) and uses an ESP32-C3 for wireless control, an H-bridge motor drive with IR2125 gate drivers, and two feedback buck converters (18 V → 5 V and 18 V → 12 V).",
-      "Added a comparator + Zener low-voltage protection circuit and 10-turn potentiometer position feedback. For the mechanical side I learned CAD and 3D-printed 60:1 and 125:1 gear trains to couple the motor to the roller and the position sensor."
+      "Added a comparator + Zener low-voltage protection circuit and 10-turn potentiometer position feedback. For the mechanical side I learned CAD and 3D-printed gear trains to couple the motor to the roller and the position sensor."
     ],
     "metrics": [
       {
@@ -257,12 +257,8 @@
         "value": "ESP32-C3"
       },
       {
-        "label": "Rails",
-        "value": "5 V & 12 V bucks"
-      },
-      {
-        "label": "Gearing",
-        "value": "60:1 / 125:1"
+        "label": "Converters",
+        "value": "2 custom bucks"
       }
     ],
     "highlights": [

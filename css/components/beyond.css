@@ -1,9 +1,9 @@
 /* ---------- Beyond the Lab (non-academic, image-forward cards) ----------
    The cover photo itself is the shared `.card-cover` component (css/components/cards.css). */
-.beyond { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.4rem; }
+.beyond { display: flex; flex-wrap: wrap; gap: 1.4rem; }
 
 .beyond-card {
-  display: flex; flex-direction: column; overflow: hidden; cursor: pointer;
+  flex: 1 1 300px; display: flex; flex-direction: column; overflow: hidden; cursor: pointer;
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   transition: transform 0.28s var(--ease), border-color 0.28s, box-shadow 0.28s;
