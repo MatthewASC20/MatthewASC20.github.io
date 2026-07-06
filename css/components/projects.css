@@ -16,8 +16,10 @@
 .project-card:hover { transform: translateY(-5px); border-color: var(--accent-line); box-shadow: var(--shadow-lg); }
 .project-card:hover::after { opacity: 1; }
 /* featured cards keep only the accent bar below — uniform width so rows fill with no right gap */
-/* full-bleed cover photo at the top of the card (breaks out of the card padding) */
-.project-card > .card-cover { margin: -1.5rem -1.5rem 1.3rem; border-radius: var(--radius) var(--radius) 0 0; }
+/* full-bleed cover photo at the top of the card: the negative margins break out of the
+   card padding, and the width must grow by the same 3rem or the cover stops short of
+   the right edge (width:100% only spans the padded content box). */
+.project-card > .card-cover { margin: -1.5rem -1.5rem 1.3rem; width: calc(100% + 3rem); border-radius: var(--radius) var(--radius) 0 0; }
 .project-card.is-featured::before {
   content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, transparent, var(--accent-line), transparent);
