@@ -25,7 +25,6 @@
   --shadow-lg: 0 24px 60px -20px rgba(15, 27, 33, 0.28);
 
   --radius: 14px;
-  --radius-sm: 9px;
   --maxw: 1120px;
   --gutter: clamp(20px, 5vw, 48px);
 

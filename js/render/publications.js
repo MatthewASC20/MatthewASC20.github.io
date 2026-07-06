@@ -1,16 +1,15 @@
 /* Publications list; the site owner's name is auto-bolded among authors. */
 
 import { $, esc } from "../lib/dom.js";
-import { svg, linkIcon } from "../lib/icons.js";
+import { svg } from "../lib/icons.js";
+import { linkChips } from "../lib/markup.js";
 
 export function renderPublications(pubs = [], ownerName = "") {
   $("#pubList").innerHTML = pubs.map((pub) => {
     const authors = (pub.authors ?? [])
       .map((a) => (a === ownerName ? `<b>${esc(a)}</b>` : esc(a)))
       .join(", ");
-    const links = (pub.links ?? [])
-      .map((l) => `<a class="link-chip" href="${esc(l.url)}" target="_blank" rel="noopener">${svg(linkIcon(l.icon), 16)}${esc(l.label)}</a>`)
-      .join("");
+    const links = linkChips(pub.links, { blank: true });
     return `
       <article class="pub reveal-item">
         ${pub.status ? `<span class="pub__status">${svg("wave", 14)}${esc(pub.status)}</span>` : ""}

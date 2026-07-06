@@ -5,7 +5,7 @@
 
 import { esc } from "./dom.js";
 
-export const GALLERY_ICON =
+const GALLERY_ICON =
   '<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="13" height="13" rx="2"/><path d="M8 21h11a2 2 0 0 0 2-2V8"/></svg>';
 
 const IMG_EXTS = ["jpg", "jpeg", "png", "webp", "svg", "gif"];
@@ -13,7 +13,7 @@ const VIDEO_EXTS = ["mp4", "webm"];
 const PROBE_EXTS = [...IMG_EXTS, ...VIDEO_EXTS];
 const MAX_PHOTOS = 40;
 
-export const isVideo = (src) =>
+const isVideo = (src) =>
   VIDEO_EXTS.includes((src || "").split("?")[0].split(".").pop().toLowerCase());
 
 /** Resolve to true if a file exists at `url` — uses a HEAD request so large media
@@ -27,17 +27,18 @@ async function probe(url) {
   }
 }
 
-/** First existing `<base>.<ext>` across the supported extensions, or null. */
+/** First existing `<base>.<ext>` across the supported extensions, or null.
+    All extensions are probed in parallel; the earliest one in PROBE_EXTS wins. */
 async function firstExisting(base) {
-  for (const ext of PROBE_EXTS) {
-    if (await probe(`${base}.${ext}`)) return `${base}.${ext}`;
-  }
-  return null;
+  const found = await Promise.all(
+    PROBE_EXTS.map(async (ext) => ((await probe(`${base}.${ext}`)) ? `${base}.${ext}` : null))
+  );
+  return found.find(Boolean) ?? null;
 }
 
 /** Discover a card's media by probing `<dir>/cover.*` then `<dir>/1.*`, `2.*`, … until a gap.
     Returns an ordered list of src strings — the cover (if any) is first. */
-export async function discoverPhotos(dir) {
+async function discoverPhotos(dir) {
   if (!dir) return [];
   const base = dir.replace(/\/?$/, "/");
   const cover = await firstExisting(`${base}cover`);
@@ -60,15 +61,23 @@ export function mediaEl(src, { className = "", alt = "", fullscreen = false } = 
   return `<img class="${className}" src="${esc(src)}" alt="${esc(alt)}"${fullscreen ? "" : ' loading="lazy"'}>`;
 }
 
-/** Cover-banner markup for a card. opts.tag: "button" (an interactive trigger, Beyond) or
-    "div" (a static banner, Projects). `count` drives the media-count badge. */
-export function coverHTML(coverSrc, count, { tag = "div", alt = "", label = "" } = {}) {
-  if (!coverSrc) return "";
+/** Cover-banner markup for a card; `count` drives the media-count badge. */
+function coverHTML(coverSrc, count, alt = "") {
   const badge = count > 1
     ? `<span class="card-cover__count" aria-hidden="true">${GALLERY_ICON}${count}</span>`
     : "";
-  const inner = `${mediaEl(coverSrc, { className: "card-cover__img", alt })}${badge}`;
-  return tag === "button"
-    ? `<button class="card-cover" type="button"${label ? ` aria-label="${esc(label)}"` : ""}>${inner}</button>`
-    : `<div class="card-cover" aria-hidden="true">${inner}</div>`;
+  return `<div class="card-cover" aria-hidden="true">${mediaEl(coverSrc, { className: "card-cover__img", alt })}${badge}</div>`;
+}
+
+/** Discover the media folder for a card's item, stash the list on the item (the modal
+    carousel reads item.photos), and prepend the cover banner to the card element. */
+export function wireCardMedia(card, item) {
+  if (!item?.id) return;
+  discoverPhotos(`assets/photos/${item.id}/`).then((photos) => {
+    item.photos = photos;
+    if (!photos.length) return;
+    card.insertAdjacentHTML("afterbegin", coverHTML(photos[0], photos.length, item.title ?? ""));
+    const img = card.querySelector(".card-cover__img");
+    if (img) img.addEventListener("error", () => img.remove());
+  });
 }

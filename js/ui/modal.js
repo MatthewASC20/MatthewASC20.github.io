@@ -3,7 +3,8 @@
    Close via backdrop / × / Esc; browse photos with the ‹ › arrows or the ← / → keys. */
 
 import { $, esc } from "../lib/dom.js";
-import { svg, linkIcon } from "../lib/icons.js";
+import { svg } from "../lib/icons.js";
+import { tagsHTML, linkChips } from "../lib/markup.js";
 import { openLightbox } from "./lightbox.js";
 import { mediaEl } from "../lib/photos.js";
 
@@ -57,25 +58,20 @@ function openModal(contentHTML, photoSrcs) {
   $(".modal__close", modal).focus();
 }
 
-const linksMarkup = (links = []) =>
-  links.map((l) => {
-    const blank = /^https?:/.test(l.url) ? ' target="_blank" rel="noopener"' : "";
-    return `<a class="link-chip" href="${esc(l.url)}"${blank}>${svg(linkIcon(l.icon), 16)}${esc(l.label)}</a>`;
-  }).join("");
-
 export function openProject(p) {
   if (!p) return;
   const metrics = (p.metrics ?? [])
     .map((m) => `<div><span class="m-val">${esc(m.value)}</span><br><span class="m-lab">${esc(m.label)}</span></div>`)
     .join("");
+  const sub = [p.subtitle, p.date].filter(Boolean).join(" · ");
   const desc = (p.description ?? []).map((para) => `<p>${esc(para)}</p>`).join("");
   const highlights = (p.highlights ?? []).map((h) => `<li>${esc(h)}</li>`).join("");
-  const tags = (p.tags ?? []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
-  const links = linksMarkup(p.links);
+  const tags = tagsHTML(p.tags);
+  const links = linkChips(p.links);
 
   const content = `
     <span class="modal__icon">${svg(p.icon, 28)}</span>
-    <p class="modal__sub">${esc(p.subtitle ?? "")} · ${esc(p.date)}</p>
+    ${sub ? `<p class="modal__sub">${esc(sub)}</p>` : ""}
     <h3 class="modal__title" id="modalTitle">${esc(p.title)}</h3>
     ${metrics ? `<div class="modal__metrics">${metrics}</div>` : ""}
     ${desc}
@@ -90,8 +86,8 @@ export function openBeyond(it) {
   const sub = esc([it.kind, it.role, it.org, it.date].filter(Boolean).join(" · "));
   const paras = it.description?.length ? it.description : (it.blurb ? [it.blurb] : []);
   const desc = paras.map((para) => `<p>${esc(para)}</p>`).join("");
-  const tags = (it.tags ?? []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
-  const links = linksMarkup(it.links);
+  const tags = tagsHTML(it.tags);
+  const links = linkChips(it.links);
 
   const content = `
     ${sub ? `<p class="modal__sub">${sub}</p>` : ""}
@@ -102,11 +98,13 @@ export function openBeyond(it) {
   openModal(content, it.photos ?? []);
 }
 
-export function closeProject() {
+function closeProject() {
   const modal = $("#projectModal");
   modal.classList.remove("is-open");
   modal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
+  // drop the content so an autoplaying carousel video actually stops
+  $("#modalContent").innerHTML = "";
   photos = [];
   lastFocused?.focus?.();
 }

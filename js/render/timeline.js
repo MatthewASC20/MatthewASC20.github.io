@@ -1,11 +1,12 @@
 /* Experience/education timeline with type filters. */
 
-import { $, $$, esc } from "../lib/dom.js";
+import { $, $$, esc, wireFilterPills } from "../lib/dom.js";
+import { tagsHTML } from "../lib/markup.js";
 
 export function renderTimeline(items = []) {
   $("#timelineList").innerHTML = items.map((it, i) => {
     const highlights = (it.highlights ?? []).map((h) => `<li>${esc(h)}</li>`).join("");
-    const tags = (it.tags ?? []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
+    const tags = tagsHTML(it.tags);
     const type = it.type ?? "experience";
     const logo = it.logo ?? "";
     // Optional per-logo sizing from the data file: "logoHeight" (px) and, for wide
@@ -39,15 +40,10 @@ export function renderTimeline(items = []) {
 }
 
 function initTimelineFilter() {
-  const filters = $$("#timelineFilters .filter");
-  filters.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      filters.forEach((b) => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-      const f = btn.dataset.filter;
-      $$("#timelineList .tl-item").forEach((item) => {
-        item.style.display = f === "all" || item.dataset.type === f ? "" : "none";
-      });
+  wireFilterPills($$("#timelineFilters .filter"), (btn) => {
+    const f = btn.dataset.filter;
+    $$("#timelineList .tl-item").forEach((item) => {
+      item.style.display = f === "all" || item.dataset.type === f ? "" : "none";
     });
   });
 }

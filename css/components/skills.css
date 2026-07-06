@@ -12,5 +12,4 @@
 }
 .skill-group h3::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
 .skill-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.skill-list .tag { background: var(--surface-2); }
 .skill-list .tag:hover { border-color: var(--accent-line); color: var(--text); }

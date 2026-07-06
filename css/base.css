@@ -124,6 +124,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .hero__scroll span { animation: none; }
   .trace-pulse use, .trace-divider__pulse { display: none; }
   .hero__portrait img { transition: none; }
-  .beyond-card, .card-cover__img { transition: none; }
+  .beyond-card, .project-card, .skill-group, .tl-card, .pub, .card-cover__img { transition: none; }
   .type-cursor { animation: none; }
+  .modal__backdrop, .modal__panel, .lightbox__backdrop, .lightbox__media-el { animation: none; }
 }

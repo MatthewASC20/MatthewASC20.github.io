@@ -29,7 +29,6 @@
 }
 .hero__intro { grid-area: intro; min-width: 0; }
 .hero__intro .hero__tagline { margin-bottom: 1.3rem; }
-.hero__intro .hero__cta { margin-top: 1.8rem; margin-bottom: 0; }
 
 /* ---------- Headshot (large rounded square; click to expand) ---------- */
 .hero__portrait {
@@ -62,9 +61,10 @@
 }
 .hero__portrait::before { top: -6px; left: -6px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); border-top-left-radius: 10px; }
 .hero__portrait::after { bottom: -6px; right: -6px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); border-bottom-right-radius: 10px; }
-/* When JS hides the figure (no photo / load error), pull it from the row so the
-   tagline sits alone full-width — flex gap only renders between visible items. */
+/* When JS hides the figure (no photo / load error), collapse the photo column so
+   the intro spans the full row instead of leaving an empty gap. */
 .hero__portrait[hidden] { display: none; }
+.hero__body:has(.hero__portrait[hidden]) { grid-template-columns: 1fr; grid-template-areas: "intro"; }
 
 .hero__title {
   font-size: clamp(2.6rem, 7vw, 5rem);
@@ -88,7 +88,7 @@
   max-width: 46ch; font-size: clamp(1rem, 1.6vw, 1.12rem);
   color: var(--text-muted); margin: 0;   /* row spacing handled by .hero__body */
 }
-.hero__cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.6rem; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.8rem; }
 
 .hero__scroll {
   position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%);

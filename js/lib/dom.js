@@ -14,3 +14,21 @@ export const esc = (str) =>
 
 export const prefersReduced = () =>
   window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+
+/** Make an element act like a button: click and Enter/Space both trigger `fn`. */
+export function onActivate(el, fn) {
+  el.addEventListener("click", fn);
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(); }
+  });
+}
+
+/** Filter-pill bars (timeline, projects): activate the clicked pill, then apply it. */
+export function wireFilterPills(btns, apply) {
+  btns.forEach((btn) =>
+    btn.addEventListener("click", () => {
+      btns.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      apply(btn);
+    }));
+}

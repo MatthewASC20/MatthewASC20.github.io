@@ -3,11 +3,10 @@
    The cover (cover.* or 1.*) shows on the card; clicking the card opens a detail modal
    with the photo carousel + full info. */
 
-import { $, $$, esc } from "../lib/dom.js";
+import { $, $$, esc, onActivate } from "../lib/dom.js";
+import { tagsHTML } from "../lib/markup.js";
 import { openBeyond } from "../ui/modal.js";
-import { discoverPhotos, coverHTML } from "../lib/photos.js";
-
-const photoDir = (id) => `assets/photos/${id}/`;
+import { wireCardMedia } from "../lib/photos.js";
 
 export function renderBeyond(items = []) {
   const grid = $("#beyondGrid");
@@ -19,7 +18,7 @@ export function renderBeyond(items = []) {
       it.role ? `<span class="beyond-card__role">${esc(it.role)}</span>` : "",
       it.date ? `<span class="beyond-card__date">${esc(it.date)}</span>` : "",
     ].join("");
-    const tags = (it.tags ?? []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
+    const tags = tagsHTML(it.tags);
 
     return `
       <article class="beyond-card reveal-item" data-id="${esc(it.id ?? "")}"
@@ -35,20 +34,7 @@ export function renderBeyond(items = []) {
 
   $$(".beyond-card", grid).forEach((card, idx) => {
     const it = items[idx];
-    const open = () => openBeyond(it);
-    card.addEventListener("click", open);
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
-    });
-
-    // Discover photos in this item's folder → cover on the card + carousel in the modal.
-    if (!it.id) return;
-    discoverPhotos(photoDir(it.id)).then((photos) => {
-      it.photos = photos;                      // consumed by the modal carousel
-      if (!photos.length) return;
-      card.insertAdjacentHTML("afterbegin", coverHTML(photos[0], photos.length, { tag: "div", alt: it.title }));
-      const img = card.querySelector(".card-cover__img");
-      if (img) img.addEventListener("error", () => img.remove());
-    });
+    onActivate(card, () => openBeyond(it));
+    wireCardMedia(card, it);   // cover on the card + carousel photos for the modal
   });
 }

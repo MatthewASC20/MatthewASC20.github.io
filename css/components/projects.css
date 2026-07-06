@@ -1,5 +1,6 @@
 /* ---------- Projects ---------- */
-/* minmax(min(100%, 300px), …) keeps cards from overflowing on phones < 340px wide */
+/* flex-wrap + grow (flex: 1 1 300px on the cards) makes every row — including the
+   last, partial one — stretch to fill the full width with no right-side gap. */
 .projects { display: flex; flex-wrap: wrap; gap: 1.4rem; }
 .project-card {
   position: relative; flex: 1 1 300px; display: flex; flex-direction: column;
@@ -40,4 +41,3 @@
 .pc-more svg { transition: transform 0.2s; }
 .project-card:hover .pc-more svg { transform: translateX(3px); }
 
-@media (max-width: 900px) { .project-card.is-featured { grid-column: span 1; } }

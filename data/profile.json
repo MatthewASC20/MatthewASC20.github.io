@@ -1,8 +1,6 @@
 {
   "profile": {
     "name": "Matthew De Jesus",
-    "firstName": "Matthew",
-    "lastName": "De Jesus",
     "title": "Power Electronics & Hardware Engineer",
     "roles": [
       "Power Electronics Engineer",
@@ -11,7 +9,6 @@
       "Hardware Engineer"
     ],
     "tagline": "MIT MEng candidate in EECS, background in power electronics, analog IC design, and embedded systems.",
-    "location": "Cambridge, MA",
     "photo": "assets/photo.jpg",
     "available": "Open to full-time & internship opportunities",
     "links": {

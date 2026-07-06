@@ -10,9 +10,12 @@
   <meta property="og:title" content="Matthew De Jesus — Power Electronics & Hardware Engineer" />
   <meta property="og:description" content="MIT MEng candidate designing high-efficiency power converters, characterizing GaN devices, and building hardware from the transistor up." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.dejesus.digital/" />
+  <meta property="og:image" content="https://www.dejesus.digital/assets/photo.jpg" />
   <meta name="theme-color" content="#fbfcfd" />
 
-  <!-- Set theme before first paint to avoid a light/dark flash -->
+  <!-- Set theme before first paint to avoid a light/dark flash.
+       (Keep the two hex colors in sync with META_COLORS in js/ui/theme.js.) -->
   <script>
     (() => {
       try {
@@ -35,6 +38,9 @@
 <body>
   <!-- Skip link for accessibility -->
   <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- All content is rendered from data/*.json by JS -->
+  <noscript><div class="loadstate">This site needs JavaScript to render its content — please enable it and reload.</div></noscript>
 
   <!-- Scroll progress (signal level) -->
   <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
@@ -68,7 +74,7 @@
           <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.6" y1="4.6" x2="6.4" y2="6.4"/><line x1="17.6" y1="17.6" x2="19.4" y2="19.4"/><line x1="4.6" y1="19.4" x2="6.4" y2="17.6"/><line x1="17.6" y1="6.4" x2="19.4" y2="4.6"/></g></svg>
           <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18"><path d="M21 12.8A8.5 8.5 0 1111.2 3a6.6 6.6 0 009.8 9.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
         </button>
-        <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -102,7 +108,7 @@
         </g>
       </svg>
       <div class="container hero__inner">
-        <p class="kicker" id="heroKicker">// power electronics · hardware · ip</p>
+        <p class="kicker">// power electronics · hardware · ip</p>
         <h1 class="hero__title" id="heroName">Matthew De Jesus</h1>
         <p class="hero__role" id="heroRole"></p>
 
@@ -136,7 +142,7 @@
         <div class="section__head reveal">
           <p class="kicker">// 01 — experience &amp; education</p>
           <h2 class="section__title">Timeline</h2>
-          <div class="filters" id="timelineFilters" role="tablist" aria-label="Filter timeline">
+          <div class="filters" id="timelineFilters" role="group" aria-label="Filter timeline">
             <button class="filter is-active" data-filter="all">All</button>
             <button class="filter" data-filter="experience">Experience</button>
             <button class="filter" data-filter="education">Education</button>
@@ -154,7 +160,7 @@
         <div class="section__head reveal">
           <p class="kicker">// 02 — selected work</p>
           <h2 class="section__title">Projects</h2>
-          <div class="filters" id="projectFilters" aria-label="Filter projects by tag"></div>
+          <div class="filters" id="projectFilters" role="group" aria-label="Filter projects by tag"></div>
         </div>
         <div class="projects" id="projectGrid"></div>
       </div>
@@ -217,7 +223,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <span class="mono-label">© <span id="year"></span> Matthew De Jesus</span>
-      <span class="mono-label footer__sig">designed &amp; built from scratch · <span id="footerStack">html · css · js</span></span>
+      <span class="mono-label footer__sig">designed &amp; built from scratch · html · css · js</span>
     </div>
   </footer>
 

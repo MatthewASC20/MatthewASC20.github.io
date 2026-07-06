@@ -24,4 +24,3 @@
 .beyond-card__title { font-size: 1.24rem; font-weight: 700; margin-bottom: 0.4rem; }
 .beyond-card__blurb { color: var(--text-muted); font-size: 0.96rem; margin-bottom: 1rem; }
 .beyond-card__body .tags { margin-bottom: 1rem; }
-.beyond-card__links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
