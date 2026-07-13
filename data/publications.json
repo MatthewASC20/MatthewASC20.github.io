@@ -23,5 +23,18 @@
         "icon": "github"
       }
     ]
+  },
+  {
+    "title": "High-Frequency Coss and Dynamic On-Resistance Loss in GaN Power Devices",
+    "authors": [
+      "Mansi V. Joisher",
+      "Matthew De Jesus",
+      "Carlos Sanchez",
+      "David J. Perreault"
+    ],
+    "venue": "MIT Microsystems Annual Research Conference (MARC) 2026",
+    "affiliation": "MIT Research Laboratory of Electronics",
+    "status": "Poster presentation",
+    "abstract": "Poster on the high-frequency loss-characterization work: a resonant measurement method that separates output-capacitance (Coss) loss from dynamic on-resistance in commercial GaN power devices at switching frequencies up to 30 MHz."
   }
 ]

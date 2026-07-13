@@ -397,5 +397,53 @@
     ],
     "tags": ["Motors", "Power Electronics", "Electromagnetics"],
     "links": []
+  },
+  {
+    "id": "ercot",
+    "categories": ["Software & ML"],
+    "title": "Grid Battery Arbitrage Simulator",
+    "subtitle": "MIT Energy Initiative",
+    "icon": "power",
+    "date": "2024",
+    "featured": false,
+    "blurb": "A Python simulation of grid-scale battery energy arbitrage in the Texas (ERCOT) market, using a greedy path-pruning search over hourly prices to estimate revenue and ROI.",
+    "description": [
+      "Modeled the economics of a 200 MWh grid battery arbitraging energy in the Texas (ERCOT) markets. The simulator ingests historical hourly locational prices for any ERCOT load zone and schedules charge/discharge against the battery's power and capacity limits to maximize revenue.",
+      "To stay tractable across a full year of prices, a greedy algorithm keeps only the top-N most profitable charge/discharge paths at each hour, trading exhaustive optimality for speed. Outputs include cumulative revenue, net income after the amortized battery cost, and ROI, plotted per zone and year."
+    ],
+    "metrics": [
+      { "label": "Capacity", "value": "200 MWh" },
+      { "label": "Charge rate", "value": "50 MW" },
+      { "label": "Market", "value": "ERCOT DAM/RTM" }
+    ],
+    "highlights": [
+      "Greedy top-N path pruning over a full year of hourly prices to keep the search fast.",
+      "Supports all 15 ERCOT load zones and hubs, in both day-ahead (DAM) and real-time (RTM) markets.",
+      "Reports cumulative revenue, net income after the amortized battery cost, and ROI per zone and year.",
+      "Built during undergraduate research at the MIT Energy Initiative."
+    ],
+    "tags": ["Python", "Optimization", "Energy Markets", "pandas"],
+    "links": []
+  },
+  {
+    "id": "cipherleaks",
+    "categories": ["Security"],
+    "title": "CipherLeaks Side-Channel Study",
+    "subtitle": "6.5950 Secure Hardware Design",
+    "icon": "chip",
+    "date": "2026",
+    "featured": false,
+    "blurb": "A deep-dive analysis of the CipherLeaks attack, which breaks constant-time cryptography on AMD SEV by reading deterministic ciphertext leaked through encrypted VM registers.",
+    "description": [
+      "For MIT's secure hardware design course, I studied and presented CipherLeaks (USENIX Security 2021), an attack that defeats AMD's SEV confidential-computing protections. SEV encrypts a virtual machine's memory and registers to hide them from a malicious hypervisor — but its XEX memory encryption is deterministic, so the same plaintext at a given physical address always produces the same ciphertext.",
+      "That determinism is a side channel. On every VM exit the hardware saves the guest's registers to a fixed encrypted page (the VMSA), and the hypervisor can watch those ciphertext blocks change. I traced how, combined with page-fault tracking to fingerprint execution, an attacker builds a ciphertext-to-plaintext dictionary and recovers a 2048-bit RSA key from OpenSSL's constant-time signing five bits at a time."
+    ],
+    "highlights": [
+      "Explained the deterministic XEX ciphertext side channel in AMD SEV / SEV-ES.",
+      "Walked through nested-page-fault trap-and-snapshot execution fingerprinting.",
+      "Detailed the dictionary attack that recovers a constant-time RSA key 5 bits per iteration."
+    ],
+    "tags": ["Hardware Security", "Side-Channel", "Cryptography", "AMD SEV"],
+    "links": []
   }
 ]
